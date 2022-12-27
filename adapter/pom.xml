@@ -13,10 +13,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>adapter</name>
 	<description>adapter</description>
+	<packaging>jar</packaging>
 	<properties>
-		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -27,10 +28,23 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.cedricakrou.my.blog</groupId>
+			<artifactId>user</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.cedricakrou.my.blog</groupId>
+			<artifactId>shared</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
