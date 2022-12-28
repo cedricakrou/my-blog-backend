@@ -1,5 +1,7 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
+import java.util.ArrayList;
+
 /**
  * <p>Entité domaine répresentant l'utilisateur.</p>.
  *
