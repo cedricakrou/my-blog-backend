@@ -1,9 +1,7 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
-import java.util.ArrayList;
-
 /**
- * <p>Entité domaine répresentant l'utilisateur.</p>.
+ * <p>Entité domaine representant l'utilisateur.</p>.
  *
  * @author KAKOU Akrou Cedric 2022-11-21
  */
