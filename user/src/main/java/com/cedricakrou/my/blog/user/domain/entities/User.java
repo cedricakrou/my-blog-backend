@@ -98,7 +98,7 @@ public class User extends Entity {
      * @param address firstname.
      * @return UserBuilder.
      **/
-    public UserBuilder setAddress(Address address) {
+    public UserBuilder setAddress(final Address address) {
       this.address = address;
       return this;
     }
