@@ -26,7 +26,7 @@ public class User extends Entity {
   private final String briefDescription;
   private final String workDescription;
   private final Experience currentJob;
-  private final Work work;
+  private final Work[] works;
   private final String cvLink;
 
   private User(final UserBuilder builder) {
@@ -44,7 +44,7 @@ public class User extends Entity {
     this.briefDescription = builder.briefDescription;
     this.workDescription = builder.workDescription;
     this.currentJob = builder.currentJob;
-    this.work = builder.work;
+    this.works = builder.works;
     this.cvLink = builder.cvLink;
   }
 
@@ -62,7 +62,7 @@ public class User extends Entity {
     private String briefDescription;
     private String workDescription;
     private Experience currentJob;
-    private Work work;
+    private Work[] works;
     private String cvLink;
 
     /**
@@ -134,6 +134,115 @@ public class User extends Entity {
       return this;
     }
 
+    /**
+     * <p>Change User role.</p>
+     *
+     * @param role User role.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setRole(final Role role) {
+      this.role = role;
+      return this;
+    }
+
+    /**
+     * <p>Change Menu value.</p>
+     *
+     * @param menus user menu.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setMenus(final Menu[] menus) {
+      this.menus = menus;
+      return this;
+    }
+
+    /**
+     * <p>Change experiences value.</p>
+     *
+     * @param experiences experiences.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setExperiences(final Experience[] experiences) {
+      this.experiences = experiences;
+      return this;
+    }
+
+    /**
+     * <p>Change socialMedias value.</p>
+     *
+     * @param socialMedias socialMedias.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setSocialMedias(final SocialMedia[] socialMedias) {
+      this.socialMedias = socialMedias;
+      return this;
+    }
+
+    /**
+     * <p>Change services value.</p>
+     *
+     * @param services services.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setServices(final Service services) {
+      this.services = services;
+      return this;
+    }
+
+    /**
+     * <p>Change briefDescription value.</p>
+     *
+     * @param briefDescription brief description.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setBriefDescription(final String briefDescription) {
+      this.briefDescription = briefDescription;
+      return this;
+    }
+
+    /**
+     * <p>Change work description value.</p>
+     *
+     * @param workDescription work description.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setWorkDescription(final String workDescription) {
+      this.workDescription = workDescription;
+      return this;
+    }
+
+    /**
+     * <p>Change currentJob value.</p>
+     *
+     * @param currentJob currentJob.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setCurrentJob(final Experience currentJob) {
+      this.currentJob = currentJob;
+      return this;
+    }
+
+    /**
+     * <p>Change works value.</p>
+     *
+     * @param works works.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setWorks(final Work[] works) {
+      this.works = works;
+      return this;
+    }
+
+    /**
+     * <p>Change cv link value.</p>
+     *
+     * @param cvLink link of cv.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setCvLink(final String cvLink) {
+      this.cvLink = cvLink;
+      return this;
+    }
 
     /**
      * <p>Build an instance of User.</p>
