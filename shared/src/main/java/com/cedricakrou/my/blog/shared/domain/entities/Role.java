@@ -1,6 +1,6 @@
 package com.cedricakrou.my.blog.shared.domain.entities;
 
-import com.cedricakrou.library.generic.aggregate.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.Entity;
 import java.util.UUID;
 import lombok.Getter;
 
