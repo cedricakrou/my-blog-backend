@@ -13,7 +13,7 @@ import lombok.Getter;
 public class Country extends Entity {
   private final String name;
   private final String isoCode;
-  private final String indicative;
+  private final int indicative;
 
   /**
    * <p>Constructor.</p>
@@ -30,7 +30,7 @@ public class Country extends Entity {
                  final boolean deleted,
                  final String name,
                  final String isoCode,
-                 final String indicative
+                 final int indicative
   ) {
     super(id, enabled, deleted);
     this.name = name;

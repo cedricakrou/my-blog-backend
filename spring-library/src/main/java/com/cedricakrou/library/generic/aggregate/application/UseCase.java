@@ -13,5 +13,5 @@ public interface UseCase<T extends Command> {
    *
    * @param command command of the use case.
    */
-  void perform(final T command);
+  void perform(T command);
 }
