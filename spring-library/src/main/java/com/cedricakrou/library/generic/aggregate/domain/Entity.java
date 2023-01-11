@@ -1,4 +1,4 @@
-package com.cedricakrou.library.generic.aggregate;
+package com.cedricakrou.library.generic.aggregate.domain;
 
 import java.util.UUID;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.cedricakrou.my.blog.user.domain.value.objects;
 
-import com.cedricakrou.library.generic.aggregate.ValueObject;
+import com.cedricakrou.library.generic.aggregate.domain.ValueObject;
 
 /**
  * <p>Value object representing User Tasks.</p>

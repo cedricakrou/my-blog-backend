@@ -1,7 +1,7 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
-import com.cedricakrou.library.generic.aggregate.AbstractEntityBuilder;
-import com.cedricakrou.library.generic.aggregate.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.AbstractEntityBuilder;
+import com.cedricakrou.library.generic.aggregate.domain.Entity;
 import com.cedricakrou.my.blog.user.domain.value.objects.Skill;
 import java.util.UUID;
 
