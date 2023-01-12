@@ -1,6 +1,5 @@
 package com.cedricakrou.my.blog.adapter;
 
-import com.cedricakrou.library.generic.core.Utility;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,14 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author KAKOU AKrou Cedric
  */
 @SpringBootApplication
-public class AdapterApplication extends Utility {
-
-  /**
-   * <p>Default constructor.</p>
-   */
-  private AdapterApplication() {
-    super();
-  }
+@SuppressWarnings("PMD")
+public class AdapterApplication {
 
   /**
    * <p>Starting method.</p>

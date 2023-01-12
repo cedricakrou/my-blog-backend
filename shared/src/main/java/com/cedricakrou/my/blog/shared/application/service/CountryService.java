@@ -44,7 +44,7 @@ public interface CountryService {
   Optional<Country> findByCountryIndicative(int indicative);
 
   /**
-   * <p>Get the country.</p>
+   * <p>Save the country.</p>
    *
    * @param country Country.
    */
