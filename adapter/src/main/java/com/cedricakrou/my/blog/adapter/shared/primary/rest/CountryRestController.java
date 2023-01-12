@@ -4,6 +4,8 @@ import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreateCountryFor
 import com.cedricakrou.my.blog.shared.application.command.CreateCountryCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.usecase.CreateCountryUseCase;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +36,11 @@ public final class CountryRestController {
    * <p>Endpoint for country creating.</p>
    *
    * @param form Create country formula data.
+   * @return Response.
    */
   @PostMapping("")
-  public void create(final @RequestBody CreateCountryForm form) {
+  public ResponseEntity<Void> create(
+          final @RequestBody CreateCountryForm form) {
 
     CreateCountryCommand command = new CreateCountryCommand(
             form.getName(),
@@ -47,6 +51,9 @@ public final class CountryRestController {
     CreateCountryUseCase useCase = new CreateCountryUseCase(this.sharedFacade);
 
     useCase.perform(command);
-  }
 
+    return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .build();
+  }
 }
