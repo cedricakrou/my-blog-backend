@@ -1,6 +1,11 @@
 package com.cedricakrou.my.blog.adapter.shared.primary.rest;
 
-import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreateCountryForm;
+import com.cedricakrou.my.blog.shared.application.command.CreateCountryCommand;
+import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
+import com.cedricakrou.my.blog.shared.application.usecase.CreateCountryUseCase;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,14 +18,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/country")
 public final class CountryRestController {
 
-  private final CountryRepository countryRepository;
+  private final SharedFacade sharedFacade;
 
   /**
    * <p>Default constructor.</p>
    *
-   * @param countryRepository country repository.
+   * @param sharedFacade country repository.
    */
-  private CountryRestController(final CountryRepository countryRepository) {
-    this.countryRepository = countryRepository;
+  public CountryRestController(
+          final SharedFacade sharedFacade) {
+    this.sharedFacade = sharedFacade;
   }
+
+  /**
+   * <p>Endpoint for country creating.</p>
+   *
+   * @param form Create country formula data.
+   */
+  @PostMapping("")
+  public void create(final @RequestBody CreateCountryForm form) {
+
+    CreateCountryCommand command = new CreateCountryCommand(
+            form.getName(),
+            form.getIsoCode(),
+            form.getIndicative()
+    );
+
+    CreateCountryUseCase useCase = new CreateCountryUseCase(this.sharedFacade);
+
+    useCase.perform(command);
+  }
+
 }
