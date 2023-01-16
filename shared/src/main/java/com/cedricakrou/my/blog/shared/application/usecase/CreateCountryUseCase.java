@@ -40,6 +40,8 @@ public class CreateCountryUseCase implements UseCase<CreateCountryCommand> {
   @Override
   public void perform(final CreateCountryCommand command) {
 
+    command.checkValidity();
+
     if (this.sharedFacade.findByCountryName(command.getName())
             .isPresent()) {
       throw new AlreadyExistsException(
