@@ -4,6 +4,7 @@ import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyEx
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,7 +23,7 @@ public class MyBlogControllerAdviceHandler
   /**
    * <p>Handler for AlreadyExistsException.</p>
    *
-   * @param exception AlreadyExistsException.Web request.
+   * @param exception AlreadyExistsException.
    * @return ResponseEntity.
    */
   @ExceptionHandler(AlreadyExistsException.class)
@@ -34,5 +35,23 @@ public class MyBlogControllerAdviceHandler
     body.put("message", exception.getMessage());
 
     return new ResponseEntity<>(body, HttpStatus.FOUND);
+  }
+
+  /**
+   * <p>Handler for ConstraintViolationException.</p>
+   *
+   * @param exception ConstraintViolationException.
+   * @return ResponseEntity.
+   */
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<Object> handleAlreadyException(
+          final ConstraintViolationException exception
+  ) {
+
+    Map<String, Object> body = new HashMap<>();
+    body.put("timestamp", LocalDateTime.now());
+    body.put("message", exception.getMessage());
+
+    return new ResponseEntity<>(body, HttpStatus.EXPECTATION_FAILED);
   }
 }

@@ -9,6 +9,7 @@ import lombok.Getter;
  */
 @Getter
 public class CreateCountryForm {
+
   private final String name;
   private final String isoCode;
   private final int indicative;
