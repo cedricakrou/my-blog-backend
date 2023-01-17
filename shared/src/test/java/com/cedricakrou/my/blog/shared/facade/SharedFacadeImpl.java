@@ -4,6 +4,7 @@ import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
+import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,5 +50,20 @@ public class SharedFacadeImpl implements SharedFacade {
   @Override
   public void saveCountry(Country country) {
     this.countryRepository.save(country);
+  }
+
+  @Override
+  public Optional<Role> findRoleByName(String roleName) {
+    return this.roleRepository.findByName(roleName);
+  }
+
+  @Override
+  public void addRole(Role role) {
+    this.roleRepository.save(role);
+  }
+
+  @Override
+  public void deleteAll() {
+    this.roleRepository.deleteAll();
   }
 }

@@ -19,7 +19,14 @@ public interface RoleRepository {
 
   /**
    * <p>find a role by name.</p>
+   *
+   * @param roleName the role name.
+   * @return the role if it found.
    */
-  Optional<Role> findRoleByName(String roleName);
+  Optional<Role> findByName(String roleName);
 
+  /**
+   * <p>Delete all role.</p>
+   */
+  void deleteAll();
 }

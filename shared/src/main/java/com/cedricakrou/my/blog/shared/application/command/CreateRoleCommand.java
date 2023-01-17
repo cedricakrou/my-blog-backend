@@ -25,8 +25,8 @@ public class CreateRoleCommand implements Command {
    * @param description description name.
    */
   public CreateRoleCommand(
-          String name,
-          String description
+          final String name,
+          final String description
   ) {
     this.name = name;
     this.description = description;

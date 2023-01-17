@@ -1,5 +1,6 @@
 package com.cedricakrou.my.blog.shared.usecases;
 
+import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
 import com.cedricakrou.my.blog.shared.application.command.CreateRoleCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
@@ -47,6 +48,8 @@ class CreateRoleUseCaseTests {
             this.roleRepository
     );
     this.useCase = new CreateRoleUseCase(sharedFacade);
+
+    this.roleRepository.deleteAll();
   }
 
   /**
@@ -57,6 +60,7 @@ class CreateRoleUseCaseTests {
   @Test
   void createRole_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() {
 
+    // Given
     String name = "";
     String description = "";
 
@@ -65,11 +69,13 @@ class CreateRoleUseCaseTests {
             description
     );
 
+    // When
     Exception exception = Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> this.useCase.perform(command)
     );
 
+    // Then
     Assertions.assertEquals(
             "name: Role name is mandatory !",
             exception.getMessage());
@@ -84,9 +90,11 @@ class CreateRoleUseCaseTests {
   @Test
   void createRole_shouldBeSucceed() {
 
+    // Given
     String name = "ADMIN";
     String description = "Admin role";
 
+    // When
     CreateRoleCommand command = new CreateRoleCommand(
             name,
             description
@@ -94,6 +102,7 @@ class CreateRoleUseCaseTests {
 
     this.useCase.perform(command);
 
+    // Then
     verify(roleRepository, times(1)).save(Mockito.any(Role.class));
   }
 
@@ -105,6 +114,7 @@ class CreateRoleUseCaseTests {
   @Test
   void createRole_shouldBeFailedWhenRoleNameExistsAlready() {
 
+    // Given
     String name = "ADMIN";
     String description = "Admin role";
 
@@ -114,8 +124,6 @@ class CreateRoleUseCaseTests {
             description
     );
 
-    this.useCase.perform(command);
-
     Role role = new Role(
             UUID.randomUUID(),
             false,
@@ -124,9 +132,19 @@ class CreateRoleUseCaseTests {
             description,
             new Permission[]{});
 
-    when(roleRepository.findRoleByName(command.getName()))
+    when(roleRepository.findByName(command.getName()))
             .thenReturn(Optional.of(role));
 
-    verify(roleRepository, times(1)).save(Mockito.any(Role.class));
+    // When
+    Exception exception = Assertions.assertThrows(
+            AlreadyExistsException.class,
+            () -> this.useCase.perform(command)
+    );
+
+    // Then
+    Assertions.assertEquals(
+            "Role already exists with this name !",
+            exception.getMessage());
+
   }
 }
