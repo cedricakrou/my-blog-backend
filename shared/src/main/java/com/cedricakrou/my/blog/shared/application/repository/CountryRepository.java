@@ -49,4 +49,9 @@ public interface CountryRepository {
    * @param country Country.
    */
   void save(Country country);
+
+  /**
+   * <p>Delete all countries.</p>
+   */
+  void deleteAll();
 }

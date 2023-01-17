@@ -68,8 +68,15 @@ public final class CountryRepositoryImpl implements CountryRepository {
     this.pgCountryRepository.save(countryEntity);
   }
 
+  @Override
+  public void deleteAll() {
+    this.pgCountryRepository.deleteAll();
+  }
+
   /**
-   * <p>From optionalCountryEntity To optionalCountry.</p>
+   * <p>
+   * From optionalCountryEntity To optionalCountry.
+   * </p>
    *
    * @param optionalCountry optional country.
    * @return Option Country.
