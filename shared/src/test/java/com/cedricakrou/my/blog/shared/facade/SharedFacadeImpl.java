@@ -2,6 +2,7 @@ package com.cedricakrou.my.blog.shared.facade;
 
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,9 +18,12 @@ import java.util.UUID;
 public class SharedFacadeImpl implements SharedFacade {
 
   CountryRepository countryRepository;
+  RoleRepository roleRepository;
 
-  public SharedFacadeImpl(CountryRepository countryRepository) {
+  public SharedFacadeImpl(CountryRepository countryRepository,
+                          RoleRepository roleRepository) {
     this.countryRepository = countryRepository;
+    this.roleRepository = roleRepository;
   }
 
   @Override
