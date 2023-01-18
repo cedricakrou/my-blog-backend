@@ -2,8 +2,10 @@ package com.cedricakrou.my.blog.adapter.shared.primary.facade;
 
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
+import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,17 +21,21 @@ public final class SharedFacadeAdapter implements SharedFacade {
 
   private final CountryRepository countryRepository;
   private final RoleRepository roleRepository;
+  private final PermissionRepository permissionRepository;
 
   /**
    * <p>Default constructor.</p>
    *
-   * @param countryRepository country repository.
-   * @param roleRepository    role repository.
+   * @param countryRepository    country repository.
+   * @param roleRepository       role repository.
+   * @param permissionRepository permission repository.
    */
   public SharedFacadeAdapter(final CountryRepository countryRepository,
-                             final RoleRepository roleRepository) {
+                             final RoleRepository roleRepository,
+                             final PermissionRepository permissionRepository) {
     this.countryRepository = countryRepository;
     this.roleRepository = roleRepository;
+    this.permissionRepository = permissionRepository;
   }
 
   @Override
@@ -74,5 +80,15 @@ public final class SharedFacadeAdapter implements SharedFacade {
   @Override
   public void deleteAll() {
     this.roleRepository.deleteAll();
+  }
+
+  @Override
+  public Optional<Permission> findPermissionByName(final String name) {
+    return this.permissionRepository.findByName(name);
+  }
+
+  @Override
+  public void addPermission(final Permission permission) {
+    this.permissionRepository.save(permission);
   }
 }

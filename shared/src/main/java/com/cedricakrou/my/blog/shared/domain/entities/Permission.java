@@ -2,12 +2,14 @@ package com.cedricakrou.my.blog.shared.domain.entities;
 
 import com.cedricakrou.library.generic.aggregate.domain.Entity;
 import java.util.UUID;
+import lombok.Getter;
 
 /**
  * <p>Entity representing a permission of role.</p>
  *
  * @author KAKOU Akrou Cedric 2023-01-09
  */
+@Getter
 public class Permission extends Entity {
 
   private final String name;

@@ -19,17 +19,17 @@ import lombok.Getter;
  * @author KAKOU Akrou Cedric 2023-01-17
  */
 @Entity
-@Table(name = "role")
+@Table(name = "permission")
 @Getter
-public class RoleEntity extends EntityRoot {
+public class PermissionEntity extends EntityRoot {
 
   @Column(name = "name", unique = true)
   private String name;
   @Column(name = "description")
   private String description;
-  @Column(name = "permissions")
-  @ManyToMany(mappedBy = "roles")
-  private List<PermissionEntity> permissions;
+  @Column(name = "roles")
+  @ManyToMany
+  private List<RoleEntity> roles;
 
   /**
    * <p>Secondary constructor.</p>
@@ -39,43 +39,43 @@ public class RoleEntity extends EntityRoot {
    * @param deleted     Deleted.
    * @param name        name.
    * @param description description.
-   * @param permissions permissions.
+   * @param roles       roles.
    */
-  protected RoleEntity(final UUID id,
-                       final boolean enabled,
-                       final boolean deleted,
-                       final String name,
-                       final String description,
-                       final List<PermissionEntity> permissions) {
+  protected PermissionEntity(final UUID id,
+                             final boolean enabled,
+                             final boolean deleted,
+                             final String name,
+                             final String description,
+                             final List<RoleEntity> roles) {
     super(id, enabled, deleted);
     this.name = name;
     this.description = description;
-    this.permissions = permissions;
+    this.roles = roles;
   }
 
   /**
    * <p>Constructor without arguments.</p>
    */
-  public RoleEntity() {
+  public PermissionEntity() {
     super(null, false, false);
   }
 
   /**
-   * <p>Create this entity from Role Domain.</p>
+   * <p>Create this entity from Permission Domain.</p>
    *
-   * @param role role domain.
-   * @return Role Entity.
+   * @param permission domain.
+   * @return Permission Entity.
    */
-  public static RoleEntity from(final Role role) {
+  public static PermissionEntity from(final Permission permission) {
 
-    return new RoleEntity(
-            role.getId(),
-            role.isEnabled(),
-            role.isDeleted(),
-            role.getName(),
-            role.getDescription(),
-            Arrays.stream(role.getPermissions()).
-                    map(PermissionEntity::from)
+    return new PermissionEntity(
+            permission.getId(),
+            permission.isEnabled(),
+            permission.isDeleted(),
+            permission.getName(),
+            permission.getDescription(),
+            Arrays.stream(permission.getRoles())
+                    .map(RoleEntity::from)
                     .collect(Collectors.toList())
     );
   }
@@ -83,18 +83,22 @@ public class RoleEntity extends EntityRoot {
   /**
    * <p>Convert this entity to Role Domain.</p>
    *
-   * @return Role.
+   * @return Permission.
    */
-  public Role toDomain() {
+  public Permission toDomain() {
 
-    return new Role(
+    return new Permission(
             UUID.randomUUID(),
             super.isEnabled(),
             super.isDeleted(),
             this.name,
             this.description,
-            this.permissions.stream()
-                    .map(PermissionEntity::toDomain)
-                    .toArray(Permission[]::new));
+            this.roles.stream().map(it ->
+                    new Role(it.getId(),
+                            it.isEnabled(),
+                            it.isDeleted(),
+                            it.getName())
+            ).toArray(Role[]::new)
+    );
   }
 }
