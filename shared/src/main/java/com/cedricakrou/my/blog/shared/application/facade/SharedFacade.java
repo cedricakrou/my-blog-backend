@@ -4,6 +4,7 @@ import com.cedricakrou.my.blog.shared.application.service.CountryService;
 import com.cedricakrou.my.blog.shared.application.service.EmploymentTypeService;
 import com.cedricakrou.my.blog.shared.application.service.PermissionService;
 import com.cedricakrou.my.blog.shared.application.service.RoleService;
+import com.cedricakrou.my.blog.shared.application.service.SkillService;
 
 /**
  * <p>
@@ -16,5 +17,6 @@ import com.cedricakrou.my.blog.shared.application.service.RoleService;
 public interface SharedFacade extends CountryService,
         RoleService,
         PermissionService,
-        EmploymentTypeService {
+        EmploymentTypeService,
+        SkillService {
 }

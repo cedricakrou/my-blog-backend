@@ -1,16 +1,15 @@
 package com.cedricakrou.my.blog.shared.usecases;
 
 import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
-import com.cedricakrou.my.blog.shared.application.command.CreateRoleCommand;
+import com.cedricakrou.my.blog.shared.application.command.CreateSkillCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
 import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.application.repository.SkillRepository;
-import com.cedricakrou.my.blog.shared.application.usecase.CreateRoleUseCase;
-import com.cedricakrou.my.blog.shared.domain.entities.Permission;
-import com.cedricakrou.my.blog.shared.domain.entities.Role;
+import com.cedricakrou.my.blog.shared.application.usecase.CreateSkillUseCase;
+import com.cedricakrou.my.blog.shared.domain.entities.Skill;
 import com.cedricakrou.my.blog.shared.facade.SharedFacadeImpl;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,52 +28,43 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests of Use Case {@link CreateRoleUseCase}.</p>
+ * <p>Tests Of the skill creating.</p>
  *
- * @author KAKOU Akrou Cedric 2023-01-17
+ * @author KAKOU Akrou Cedric 2023-01-18
  */
 @ExtendWith(MockitoExtension.class)
-class CreateRoleUseCaseTests {
+class CreateSkillUseCaseTests {
 
-  private CreateRoleUseCase useCase;
-  private RoleRepository roleRepository;
+  private CreateSkillUseCase useCase;
+  private SkillRepository skillRepository;
 
-  /**
-   * <p>Run before each test.</p>
-   */
   @BeforeEach
-  public void setUp() {
-    SkillRepository skillRepository = mock(SkillRepository.class);
+  void setUp() {
     EmploymentTypeRepository employmentTypeRepository = mock(EmploymentTypeRepository.class);
     CountryRepository countryRepository = mock(CountryRepository.class);
+    RoleRepository roleRepository = mock(RoleRepository.class);
     PermissionRepository permissionRepository = mock(PermissionRepository.class);
-    this.roleRepository = mock(RoleRepository.class);
-
+    this.skillRepository = mock(SkillRepository.class);
     SharedFacade sharedFacade = new SharedFacadeImpl(
             countryRepository,
-            this.roleRepository,
+            roleRepository,
             permissionRepository,
             employmentTypeRepository,
-            skillRepository
+            this.skillRepository
     );
-    this.useCase = new CreateRoleUseCase(sharedFacade);
 
-    this.roleRepository.deleteAll();
+    this.useCase = new CreateSkillUseCase(sharedFacade);
   }
 
-  /**
-   * <p>
-   * This test must fail when we want to create Role with an incorrect command element.
-   * </p>
-   */
   @Test
-  void createRole_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() {
+  void createSkill_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() {
 
     // Given
     String name = "";
     String description = "";
 
-    CreateRoleCommand command = new CreateRoleCommand(
+
+    CreateSkillCommand command = new CreateSkillCommand(
             name,
             description
     );
@@ -87,62 +77,58 @@ class CreateRoleUseCaseTests {
 
     // Then
     Assertions.assertEquals(
-            "name: Role name is mandatory !",
+            "name: Skill name is mandatory !",
             exception.getMessage());
   }
 
-  /**
-   * <p>
-   * This test must be success.
-   * </p>
-   */
   @Test
-  void createRole_shouldBeSucceed() {
+  void createSkill_shouldBeSucceed() {
 
     // Given
-    String name = "ADMIN";
-    String description = "Admin role";
+    String name = "Java";
+    String description = "java";
 
-    // When
-    CreateRoleCommand command = new CreateRoleCommand(
+
+    CreateSkillCommand command = new CreateSkillCommand(
             name,
             description
     );
 
+    // When
     this.useCase.perform(command);
 
     // Then
-    verify(roleRepository, times(1)).save(Mockito.any(Role.class));
+    verify(this.skillRepository, times(1))
+            .save(Mockito.any(Skill.class));
   }
 
   /**
    * <p>
-   * This test must fail when Role Name Exists Already.
+   * This test must fail when Skill Name Exists Already.
    * </p>
    */
   @Test
-  void createRole_shouldBeFailedWhenRoleNameExistsAlready() {
+  void createSkill_shouldBeFailedWhenRoleNameExistsAlready() {
 
     // Given
-    String name = "ADMIN";
-    String description = "Admin role";
+    String name = "Java";
+    String description = "java";
 
 
-    CreateRoleCommand command = new CreateRoleCommand(
+    CreateSkillCommand command = new CreateSkillCommand(
             name,
             description
     );
 
-    Role role = new Role(
+    Skill skill = new Skill(
             UUID.randomUUID(),
             false,
             true,
             name,
-            description,
-            new Permission[]{});
+            description);
 
-    when(roleRepository.findByName(command.getName()))
-            .thenReturn(Optional.of(role));
+    when(this.skillRepository.findByName(command.getName()))
+            .thenReturn(Optional.of(skill));
 
     // When
     Exception exception = Assertions.assertThrows(
@@ -152,7 +138,7 @@ class CreateRoleUseCaseTests {
 
     // Then
     Assertions.assertEquals(
-            "Role already exists with this name !",
+            "Skill already exists with this name !",
             exception.getMessage());
 
   }
