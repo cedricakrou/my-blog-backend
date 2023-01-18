@@ -4,6 +4,7 @@ import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyEx
 import com.cedricakrou.my.blog.shared.application.command.CreateCountryCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.application.usecase.CreateCountryUseCase;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
 import com.cedricakrou.my.blog.shared.facade.SharedFacadeImpl;
@@ -33,12 +34,16 @@ class CreateCountryUseCaseTests {
   private CreateCountryUseCase useCase;
 
   private SharedFacade sharedFacade;
+  private CountryRepository countryRepository;
 
   /**
    * <p>Runs before each tests.</p>
    */
   @BeforeEach
   public void setUp() {
+    RoleRepository roleRepository = mock(RoleRepository.class);
+    this.countryRepository = mock(CountryRepository.class);
+    this.sharedFacade = new SharedFacadeImpl(countryRepository, roleRepository);
   }
 
   /**
@@ -49,9 +54,6 @@ class CreateCountryUseCaseTests {
   @Test
   void createCountry_Success() {
 
-    CountryRepository countryRepository = mock(CountryRepository.class);
-
-    this.sharedFacade = new SharedFacadeImpl(countryRepository);
     this.useCase = new CreateCountryUseCase(this.sharedFacade);
 
     String countryName = "Ivory Coast";
@@ -81,9 +83,6 @@ class CreateCountryUseCaseTests {
   @Test
   void createCountryWhenNameAlreadyExists_Failed() {
 
-    CountryRepository countryRepository = mock(CountryRepository.class);
-
-    this.sharedFacade = new SharedFacadeImpl(countryRepository);
     this.useCase = new CreateCountryUseCase(this.sharedFacade);
 
     String countryName = "Ivory Coast";
@@ -124,9 +123,8 @@ class CreateCountryUseCaseTests {
    */
   @Test
   void createCountryWhenIsoCodeAlreadyExists_Failed() {
-    CountryRepository countryRepository = mock(CountryRepository.class);
 
-    this.sharedFacade = new SharedFacadeImpl(countryRepository);
+
     this.useCase = new CreateCountryUseCase(this.sharedFacade);
 
     String countryName = "Ivory Coast";
@@ -167,9 +165,7 @@ class CreateCountryUseCaseTests {
    */
   @Test
   void createCountryWhenIndicativeAlreadyExists_Failed() {
-    CountryRepository countryRepository = mock(CountryRepository.class);
 
-    this.sharedFacade = new SharedFacadeImpl(countryRepository);
     this.useCase = new CreateCountryUseCase(this.sharedFacade);
 
     String countryName = "Ivory Coast";

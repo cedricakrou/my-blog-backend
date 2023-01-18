@@ -2,7 +2,9 @@ package com.cedricakrou.my.blog.adapter.shared.primary.facade;
 
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
+import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -16,14 +18,18 @@ import org.springframework.stereotype.Service;
 public final class SharedFacadeAdapter implements SharedFacade {
 
   private final CountryRepository countryRepository;
+  private final RoleRepository roleRepository;
 
   /**
    * <p>Default constructor.</p>
    *
    * @param countryRepository country repository.
+   * @param roleRepository    role repository.
    */
-  public SharedFacadeAdapter(final CountryRepository countryRepository) {
+  public SharedFacadeAdapter(final CountryRepository countryRepository,
+                             final RoleRepository roleRepository) {
     this.countryRepository = countryRepository;
+    this.roleRepository = roleRepository;
   }
 
   @Override
@@ -53,5 +59,20 @@ public final class SharedFacadeAdapter implements SharedFacade {
   @Override
   public void saveCountry(final Country country) {
     this.countryRepository.save(country);
+  }
+
+  @Override
+  public Optional<Role> findRoleByName(final String roleName) {
+    return this.roleRepository.findByName(roleName);
+  }
+
+  @Override
+  public void addRole(final Role role) {
+    this.roleRepository.save(role);
+  }
+
+  @Override
+  public void deleteAll() {
+    this.roleRepository.deleteAll();
   }
 }
