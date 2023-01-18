@@ -4,6 +4,7 @@ import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyEx
 import com.cedricakrou.my.blog.shared.application.command.CreateCountryCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.application.usecase.CreateCountryUseCase;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
@@ -32,7 +33,6 @@ import static org.mockito.Mockito.when;
 class CreateCountryUseCaseTests {
 
   private CreateCountryUseCase useCase;
-
   private SharedFacade sharedFacade;
   private CountryRepository countryRepository;
 
@@ -42,8 +42,12 @@ class CreateCountryUseCaseTests {
   @BeforeEach
   public void setUp() {
     RoleRepository roleRepository = mock(RoleRepository.class);
+    PermissionRepository permissionRepository = mock(PermissionRepository.class);
     this.countryRepository = mock(CountryRepository.class);
-    this.sharedFacade = new SharedFacadeImpl(countryRepository, roleRepository);
+    this.sharedFacade = new SharedFacadeImpl(
+            this.countryRepository,
+            roleRepository,
+            permissionRepository);
   }
 
   /**

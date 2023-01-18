@@ -1,12 +1,12 @@
 package com.cedricakrou.my.blog.shared.usecases;
 
 import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
-import com.cedricakrou.my.blog.shared.application.command.CreateRoleCommand;
+import com.cedricakrou.my.blog.shared.application.command.CreatePermissionCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
-import com.cedricakrou.my.blog.shared.application.usecase.CreateRoleUseCase;
+import com.cedricakrou.my.blog.shared.application.usecase.CreatePermissionUseCase;
 import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import com.cedricakrou.my.blog.shared.facade.SharedFacadeImpl;
@@ -27,34 +27,32 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * <p>Tests of Use Case {@link CreateRoleUseCase}.</p>
- *
- * @author KAKOU Akrou Cedric 2023-01-17
+ * @author KAKOU Akrou Cedric 2023-01-18
  */
 @ExtendWith(MockitoExtension.class)
-class CreateRoleUseCaseTests {
+class CreatePermissionUseCaseTests {
 
-  private CreateRoleUseCase useCase;
-  private RoleRepository roleRepository;
+  private CreatePermissionUseCase useCase;
+  private PermissionRepository permissionRepository;
 
   /**
    * <p>Run before each test.</p>
    */
   @BeforeEach
-  public void setUp() {
+  void setUp() {
 
     CountryRepository countryRepository = mock(CountryRepository.class);
-    PermissionRepository permissionRepository = mock(PermissionRepository.class);
-    this.roleRepository = mock(RoleRepository.class);
+    RoleRepository roleRepository = mock(RoleRepository.class);
+    permissionRepository = mock(PermissionRepository.class);
 
     SharedFacade sharedFacade = new SharedFacadeImpl(
             countryRepository,
-            this.roleRepository,
-            permissionRepository
+            roleRepository,
+            this.permissionRepository
     );
-    this.useCase = new CreateRoleUseCase(sharedFacade);
+    this.useCase = new CreatePermissionUseCase(sharedFacade);
 
-    this.roleRepository.deleteAll();
+    roleRepository.deleteAll();
   }
 
   /**
@@ -63,13 +61,13 @@ class CreateRoleUseCaseTests {
    * </p>
    */
   @Test
-  void createRole_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() {
+  void createPermission_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() {
 
     // Given
     String name = "";
     String description = "";
 
-    CreateRoleCommand command = new CreateRoleCommand(
+    CreatePermissionCommand command = new CreatePermissionCommand(
             name,
             description
     );
@@ -82,7 +80,7 @@ class CreateRoleUseCaseTests {
 
     // Then
     Assertions.assertEquals(
-            "name: Role name is mandatory !",
+            "name: Permission name is mandatory !",
             exception.getMessage());
 
   }
@@ -93,14 +91,14 @@ class CreateRoleUseCaseTests {
    * </p>
    */
   @Test
-  void createRole_shouldBeSucceed() {
+  void createPermission_shouldBeSucceed() {
 
     // Given
-    String name = "ADMIN";
-    String description = "Admin role";
+    String name = "Read";
+    String description = "Read permission";
 
     // When
-    CreateRoleCommand command = new CreateRoleCommand(
+    CreatePermissionCommand command = new CreatePermissionCommand(
             name,
             description
     );
@@ -108,37 +106,37 @@ class CreateRoleUseCaseTests {
     this.useCase.perform(command);
 
     // Then
-    verify(roleRepository, times(1)).save(Mockito.any(Role.class));
+    verify(permissionRepository, times(1)).save(Mockito.any(Permission.class));
   }
 
   /**
    * <p>
-   * This test must fail when Role Name Exists Already.
+   * This test must fail when we want to create Permission with an incorrect command element.
    * </p>
    */
   @Test
-  void createRole_shouldBeFailedWhenRoleNameExistsAlready() {
+  void createPermission_shouldBeFailedWhenPermissionNameExistsAlready() {
 
     // Given
     String name = "ADMIN";
     String description = "Admin role";
 
 
-    CreateRoleCommand command = new CreateRoleCommand(
+    CreatePermissionCommand command = new CreatePermissionCommand(
             name,
             description
     );
 
-    Role role = new Role(
+    Permission permission = new Permission(
             UUID.randomUUID(),
             false,
             true,
             name,
             description,
-            new Permission[]{});
+            new Role[]{});
 
-    when(roleRepository.findByName(command.getName()))
-            .thenReturn(Optional.of(role));
+    when(permissionRepository.findByName(command.getName()))
+            .thenReturn(Optional.of(permission));
 
     // When
     Exception exception = Assertions.assertThrows(
@@ -148,8 +146,8 @@ class CreateRoleUseCaseTests {
 
     // Then
     Assertions.assertEquals(
-            "Role already exists with this name !",
+            "Permission already exists with this name !",
             exception.getMessage());
-
   }
+
 }

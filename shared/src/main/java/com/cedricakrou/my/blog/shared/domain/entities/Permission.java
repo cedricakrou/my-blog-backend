@@ -2,17 +2,19 @@ package com.cedricakrou.my.blog.shared.domain.entities;
 
 import com.cedricakrou.library.generic.aggregate.domain.Entity;
 import java.util.UUID;
+import lombok.Getter;
 
 /**
  * <p>Entity representing a permission of role.</p>
  *
  * @author KAKOU Akrou Cedric 2023-01-09
  */
+@Getter
 public class Permission extends Entity {
 
   private final String name;
   private final String description;
-  private final Role role;
+  private final Role[] roles;
 
   /**
    * <p>Constructor.</p>
@@ -22,18 +24,18 @@ public class Permission extends Entity {
    * @param deleted     Deleted.
    * @param name        Permission name.
    * @param description Permission description.
-   * @param role        User Role.
+   * @param roles        User Role.
    */
   public Permission(final UUID id,
                     final boolean enabled,
                     final boolean deleted,
                     final String name,
                     final String description,
-                    final Role role
+                    final Role[] roles
   ) {
     super(id, enabled, deleted);
     this.name = name;
     this.description = description;
-    this.role = role;
+    this.roles = roles;
   }
 }

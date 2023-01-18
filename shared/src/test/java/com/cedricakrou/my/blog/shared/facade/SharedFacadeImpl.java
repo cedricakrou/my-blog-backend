@@ -2,8 +2,10 @@ package com.cedricakrou.my.blog.shared.facade;
 
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
+import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,11 +22,14 @@ public class SharedFacadeImpl implements SharedFacade {
 
   CountryRepository countryRepository;
   RoleRepository roleRepository;
+  PermissionRepository permissionRepository;
 
   public SharedFacadeImpl(CountryRepository countryRepository,
-                          RoleRepository roleRepository) {
+                          RoleRepository roleRepository,
+                          PermissionRepository permissionRepository) {
     this.countryRepository = countryRepository;
     this.roleRepository = roleRepository;
+    this.permissionRepository = permissionRepository;
   }
 
   @Override
@@ -65,5 +70,15 @@ public class SharedFacadeImpl implements SharedFacade {
   @Override
   public void deleteAll() {
     this.roleRepository.deleteAll();
+  }
+
+  @Override
+  public Optional<Permission> findPermissionByName(String name) {
+    return this.permissionRepository.findByName(name);
+  }
+
+  @Override
+  public void addPermission(Permission permission) {
+    this.permissionRepository.save(permission);
   }
 }

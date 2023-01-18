@@ -13,8 +13,8 @@ import lombok.Getter;
 public class Role extends Entity {
 
   private final String name;
-  private final String description;
-  private final Permission[] permissions;
+  private String description;
+  private Permission[] permissions;
 
   /**
    * <p>Constructor.</p>
@@ -36,5 +36,23 @@ public class Role extends Entity {
     this.name = name;
     this.description = description;
     this.permissions = permissions;
+  }
+
+  /**
+   * <p> Second Constructor.</p>
+   *
+   * @param id      Id.
+   * @param enabled Enabled
+   * @param deleted Deleted.
+   * @param name    Permission name.
+   */
+  public Role(
+          final UUID id,
+          final boolean enabled,
+          final boolean deleted,
+          final String name
+  ) {
+    super(id, enabled, deleted);
+    this.name = name;
   }
 }
