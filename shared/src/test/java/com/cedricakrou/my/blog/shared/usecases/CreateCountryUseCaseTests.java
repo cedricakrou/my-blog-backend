@@ -4,6 +4,7 @@ import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyEx
 import com.cedricakrou.my.blog.shared.application.command.CreateCountryCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.application.usecase.CreateCountryUseCase;
@@ -41,13 +42,15 @@ class CreateCountryUseCaseTests {
    */
   @BeforeEach
   public void setUp() {
+    EmploymentTypeRepository employmentTypeRepository = mock(EmploymentTypeRepository.class);
     RoleRepository roleRepository = mock(RoleRepository.class);
     PermissionRepository permissionRepository = mock(PermissionRepository.class);
     this.countryRepository = mock(CountryRepository.class);
     this.sharedFacade = new SharedFacadeImpl(
             this.countryRepository,
             roleRepository,
-            permissionRepository);
+            permissionRepository,
+            employmentTypeRepository);
   }
 
   /**
