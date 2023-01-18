@@ -36,7 +36,9 @@ class CreateRoleUseCaseTests {
   private CreateRoleUseCase useCase;
   private RoleRepository roleRepository;
 
-
+  /**
+   * <p>Run before each test.</p>
+   */
   @BeforeEach
   public void setUp() {
 
