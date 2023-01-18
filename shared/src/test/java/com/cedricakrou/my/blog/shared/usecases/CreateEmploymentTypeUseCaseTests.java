@@ -1,15 +1,14 @@
 package com.cedricakrou.my.blog.shared.usecases;
 
 import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
-import com.cedricakrou.my.blog.shared.application.command.CreatePermissionCommand;
+import com.cedricakrou.my.blog.shared.application.command.CreateEmploymentTypeCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
 import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
-import com.cedricakrou.my.blog.shared.application.usecase.CreatePermissionUseCase;
-import com.cedricakrou.my.blog.shared.domain.entities.Permission;
-import com.cedricakrou.my.blog.shared.domain.entities.Role;
+import com.cedricakrou.my.blog.shared.application.usecase.CreateEmploymentTypeUseCase;
+import com.cedricakrou.my.blog.shared.domain.entities.EmploymentType;
 import com.cedricakrou.my.blog.shared.facade.SharedFacadeImpl;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,31 +30,29 @@ import static org.mockito.Mockito.when;
  * @author KAKOU Akrou Cedric 2023-01-18
  */
 @ExtendWith(MockitoExtension.class)
-class CreatePermissionUseCaseTests {
+class CreateEmploymentTypeUseCaseTests {
 
-  private CreatePermissionUseCase useCase;
-  private PermissionRepository permissionRepository;
+  private CreateEmploymentTypeUseCase useCase;
+  private EmploymentTypeRepository employmentTypeRepository;
 
-  /**
-   * <p>Run before each test.</p>
-   */
   @BeforeEach
   void setUp() {
-    EmploymentTypeRepository employmentTypeRepository = mock(EmploymentTypeRepository.class);
+
     CountryRepository countryRepository = mock(CountryRepository.class);
     RoleRepository roleRepository = mock(RoleRepository.class);
-    permissionRepository = mock(PermissionRepository.class);
+    PermissionRepository permissionRepository = mock(PermissionRepository.class);
+    employmentTypeRepository = mock(EmploymentTypeRepository.class);
 
     SharedFacade sharedFacade = new SharedFacadeImpl(
             countryRepository,
             roleRepository,
-            this.permissionRepository,
-            employmentTypeRepository
+            permissionRepository,
+            this.employmentTypeRepository
     );
-    this.useCase = new CreatePermissionUseCase(sharedFacade);
 
-    roleRepository.deleteAll();
+    this.useCase = new CreateEmploymentTypeUseCase(sharedFacade);
   }
+
 
   /**
    * <p>
@@ -63,13 +60,13 @@ class CreatePermissionUseCaseTests {
    * </p>
    */
   @Test
-  void createPermission_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() {
+  void createEmploymentType_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() {
 
     // Given
     String name = "";
     String description = "";
 
-    CreatePermissionCommand command = new CreatePermissionCommand(
+    CreateEmploymentTypeCommand command = new CreateEmploymentTypeCommand(
             name,
             description
     );
@@ -82,7 +79,7 @@ class CreatePermissionUseCaseTests {
 
     // Then
     Assertions.assertEquals(
-            "name: Permission name is mandatory !",
+            "name: Employment type name is mandatory !",
             exception.getMessage());
 
   }
@@ -93,14 +90,13 @@ class CreatePermissionUseCaseTests {
    * </p>
    */
   @Test
-  void createPermission_shouldBeSucceed() {
+  void createEmploymentType_shouldBeSucceed() {
 
     // Given
-    String name = "Read";
-    String description = "Read permission";
+    String name = "CDI";
+    String description = "";
 
-    // When
-    CreatePermissionCommand command = new CreatePermissionCommand(
+    CreateEmploymentTypeCommand command = new CreateEmploymentTypeCommand(
             name,
             description
     );
@@ -108,37 +104,37 @@ class CreatePermissionUseCaseTests {
     this.useCase.perform(command);
 
     // Then
-    verify(permissionRepository, times(1)).save(Mockito.any(Permission.class));
+    verify(this.employmentTypeRepository, times(1))
+            .save(Mockito.any(EmploymentType.class));
   }
 
   /**
    * <p>
-   * This test must fail when we want to create Permission with an incorrect command element.
+   * This test must fail when Role Name Exists Already.
    * </p>
    */
   @Test
-  void createPermission_shouldBeFailedWhenPermissionNameExistsAlready() {
+  void createEmploymentType_shouldBeFailedWhenRoleNameExistsAlready() {
 
     // Given
-    String name = "ADMIN";
-    String description = "Admin role";
+    String name = "STAGE";
+    String description = "";
 
-
-    CreatePermissionCommand command = new CreatePermissionCommand(
+    CreateEmploymentTypeCommand command = new CreateEmploymentTypeCommand(
             name,
             description
     );
 
-    Permission permission = new Permission(
+    EmploymentType type = new EmploymentType(
             UUID.randomUUID(),
-            false,
             true,
+            false,
             name,
-            description,
-            new Role[]{});
+            description
+    );
 
-    when(permissionRepository.findByName(command.getName()))
-            .thenReturn(Optional.of(permission));
+    when(this.employmentTypeRepository.findByName(command.getName()))
+            .thenReturn(Optional.of(type));
 
     // When
     Exception exception = Assertions.assertThrows(
@@ -148,8 +144,8 @@ class CreatePermissionUseCaseTests {
 
     // Then
     Assertions.assertEquals(
-            "Permission already exists with this name !",
+            "Employment type already exists with this name !",
             exception.getMessage());
-  }
 
+  }
 }
