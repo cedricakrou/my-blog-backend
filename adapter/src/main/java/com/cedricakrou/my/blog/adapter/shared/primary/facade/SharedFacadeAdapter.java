@@ -2,9 +2,11 @@ package com.cedricakrou.my.blog.adapter.shared.primary.facade;
 
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
+import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
+import com.cedricakrou.my.blog.shared.domain.entities.EmploymentType;
 import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import java.util.Optional;
@@ -22,20 +24,25 @@ public final class SharedFacadeAdapter implements SharedFacade {
   private final CountryRepository countryRepository;
   private final RoleRepository roleRepository;
   private final PermissionRepository permissionRepository;
+  private final EmploymentTypeRepository employmentTypeRepository;
 
   /**
    * <p>Default constructor.</p>
    *
-   * @param countryRepository    country repository.
-   * @param roleRepository       role repository.
-   * @param permissionRepository permission repository.
+   * @param countryRepository        country repository.
+   * @param roleRepository           role repository.
+   * @param permissionRepository     permission repository.
+   * @param employmentTypeRepository employment type repository.
    */
   public SharedFacadeAdapter(final CountryRepository countryRepository,
                              final RoleRepository roleRepository,
-                             final PermissionRepository permissionRepository) {
+                             final PermissionRepository permissionRepository,
+                             final EmploymentTypeRepository
+                                     employmentTypeRepository) {
     this.countryRepository = countryRepository;
     this.roleRepository = roleRepository;
     this.permissionRepository = permissionRepository;
+    this.employmentTypeRepository = employmentTypeRepository;
   }
 
   @Override
@@ -90,5 +97,15 @@ public final class SharedFacadeAdapter implements SharedFacade {
   @Override
   public void addPermission(final Permission permission) {
     this.permissionRepository.save(permission);
+  }
+
+  @Override
+  public Optional<EmploymentType> findEmploymentTypeByName(final String name) {
+    return this.employmentTypeRepository.findByName(name);
+  }
+
+  @Override
+  public void addEmploymentType(final EmploymentType type) {
+    this.employmentTypeRepository.save(type);
   }
 }
