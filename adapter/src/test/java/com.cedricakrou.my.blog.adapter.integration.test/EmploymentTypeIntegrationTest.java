@@ -27,7 +27,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class EmploymentTypeIntegrationTest extends AbstractIntegrationTest {
+class EmploymentTypeIntegrationTest extends AbstractIntegrationTest {
 
   @Autowired
   MockMvc mockMvc;

@@ -1,8 +1,9 @@
-package com.cedricakrou.my.blog.adapter.shared.secondary.services;
+package com.cedricakrou.my.blog.adapter.shared.secondary.services.query;
 
-import com.cedricakrou.my.blog.adapter.shared.secondary.entities.CountryEntity;
+import com.cedricakrou.my.blog.adapter.shared.primary.rest.vm.CountryVm;
 import com.cedricakrou.my.blog.adapter.shared.secondary.repositories.jpa.PgCountryRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author KAKOU Akrou Cedric 2023-01-12
  */
 @Service
-public class QueryServiceImpl implements QueryService {
+public class CountryQueryServiceImpl implements CountryQueryService {
 
   private final PgCountryRepository pgCountryRepository;
 
@@ -20,7 +21,8 @@ public class QueryServiceImpl implements QueryService {
    *
    * @param pgCountryRepository Jpa Country repository.
    */
-  public QueryServiceImpl(final PgCountryRepository pgCountryRepository) {
+  public CountryQueryServiceImpl(
+          final PgCountryRepository pgCountryRepository) {
     this.pgCountryRepository = pgCountryRepository;
   }
 
@@ -30,7 +32,11 @@ public class QueryServiceImpl implements QueryService {
    * @return list of countries.
    */
   @Override
-  public List<CountryEntity> findAllCountry() {
-    return this.pgCountryRepository.findAll();
+  public List<CountryVm> findAllCountries() {
+    return this.pgCountryRepository.findAll()
+            .stream()
+            .filter(it -> !it.isDeleted())
+            .map(CountryVm::new)
+            .collect(Collectors.toList());
   }
 }
