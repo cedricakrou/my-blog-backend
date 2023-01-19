@@ -24,4 +24,9 @@ public interface SkillRepository {
    * @param skill skill.
    */
   void save(Skill skill);
+
+  /**
+   * <p> Delete All skills.</p>
+   */
+  void deleteAll();
 }

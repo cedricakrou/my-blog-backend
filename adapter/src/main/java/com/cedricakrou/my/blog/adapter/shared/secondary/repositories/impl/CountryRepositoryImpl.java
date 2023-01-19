@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author KAKOU Akrou Cedric 2023-01-12
  */
 @Service
-public final class CountryRepositoryImpl implements CountryRepository {
+class CountryRepositoryImpl implements CountryRepository {
 
   private final PgCountryRepository pgCountryRepository;
 
@@ -23,7 +23,7 @@ public final class CountryRepositoryImpl implements CountryRepository {
    *
    * @param pgCountryRepository Jpa country Repository.
    */
-  public CountryRepositoryImpl(final PgCountryRepository pgCountryRepository) {
+  CountryRepositoryImpl(final PgCountryRepository pgCountryRepository) {
     this.pgCountryRepository = pgCountryRepository;
   }
 
