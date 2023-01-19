@@ -4,6 +4,7 @@ import com.cedricakrou.my.blog.adapter.common.AbstractIntegrationTest;
 import com.cedricakrou.my.blog.shared.application.command.CreateEmploymentTypeCommand;
 import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.EmploymentType;
+import com.cedricakrou.my.blog.shared.domain.entities.Skill;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 /**
  * @author KAKOU Akrou Cedric 2023-01-18
@@ -126,6 +130,32 @@ class EmploymentTypeIntegrationTest extends AbstractIntegrationTest {
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
             .andExpect(MockMvcResultMatchers.status().isFound())
+            .andDo(MockMvcResultHandlers.print());
+  }
+
+  @Test
+  void getAllEmploymentType_ShouldBeSucceed() throws Exception {
+
+    String name = "Stage";
+    String description = "";
+
+    this.employmentTypeRepository.save(new EmploymentType(
+            UUID.randomUUID(),
+            true,
+            false,
+            name,
+            description
+    ));
+
+    mockMvc.perform(
+                    get("/employment-type")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers
+                    .jsonPath("$.length()")
+                    .value(1))
             .andDo(MockMvcResultHandlers.print());
   }
 }

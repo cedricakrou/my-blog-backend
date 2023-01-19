@@ -136,7 +136,7 @@ class SkillIntegrationTest extends AbstractIntegrationTest {
   }
 
   @Test
-  void getAllRSkills_ShouldBeSucceed() throws Exception {
+  void getAllSkills_ShouldBeSucceed() throws Exception {
 
     String name = "Admin";
     String description = "CIV";
