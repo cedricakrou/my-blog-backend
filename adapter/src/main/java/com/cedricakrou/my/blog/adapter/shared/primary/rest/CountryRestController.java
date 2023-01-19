@@ -2,12 +2,11 @@ package com.cedricakrou.my.blog.adapter.shared.primary.rest;
 
 import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreateCountryForm;
 import com.cedricakrou.my.blog.adapter.shared.primary.rest.vm.CountryVm;
-import com.cedricakrou.my.blog.adapter.shared.secondary.services.QueryService;
+import com.cedricakrou.my.blog.adapter.shared.secondary.services.query.CountryQueryService;
 import com.cedricakrou.my.blog.shared.application.command.CreateCountryCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.usecase.CreateCountryUseCase;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,19 +25,19 @@ import org.springframework.web.bind.annotation.RestController;
 public final class CountryRestController {
 
   private final SharedFacade sharedFacade;
-  private final QueryService queryService;
+  private final CountryQueryService countryQueryService;
 
   /**
    * <p>Default constructor.</p>
    *
-   * @param sharedFacade country repository.
-   * @param queryService to fetch data in the database.
+   * @param sharedFacade        country repository.
+   * @param countryQueryService to fetch data in the database.
    */
   public CountryRestController(
           final SharedFacade sharedFacade,
-          final QueryService queryService) {
+          final CountryQueryService countryQueryService) {
     this.sharedFacade = sharedFacade;
-    this.queryService = queryService;
+    this.countryQueryService = countryQueryService;
   }
 
   /**
@@ -77,10 +76,7 @@ public final class CountryRestController {
     return ResponseEntity
             .status(HttpStatus.OK)
             .body(
-                    this.queryService.findAllCountry()
-                            .stream()
-                            .map(CountryVm::new)
-                            .collect(Collectors.toList())
+                    this.countryQueryService.findAllCountries()
             );
   }
 }

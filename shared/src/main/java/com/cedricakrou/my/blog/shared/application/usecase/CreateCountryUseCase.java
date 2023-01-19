@@ -68,7 +68,7 @@ public class CreateCountryUseCase implements UseCase<CreateCountryCommand> {
     Country country = new Country(
             UUID.randomUUID(),
             true,
-            true,
+            false,
             command.getName(),
             command.getIsoCode(),
             command.getIndicative()
