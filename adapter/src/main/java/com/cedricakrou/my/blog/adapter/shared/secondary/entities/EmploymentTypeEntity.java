@@ -14,7 +14,7 @@ import lombok.Getter;
  * @author KAKOU Akrou Cedric 2023-01-17
  */
 @Entity
-@Table(name = "employement_type")
+@Table(name = "employment_type")
 @Getter
 public class EmploymentTypeEntity extends EntityRoot {
 

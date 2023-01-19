@@ -5,10 +5,12 @@ import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
 import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
+import com.cedricakrou.my.blog.shared.application.repository.SkillRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
 import com.cedricakrou.my.blog.shared.domain.entities.EmploymentType;
 import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
+import com.cedricakrou.my.blog.shared.domain.entities.Skill;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public final class SharedFacadeAdapter implements SharedFacade {
   private final RoleRepository roleRepository;
   private final PermissionRepository permissionRepository;
   private final EmploymentTypeRepository employmentTypeRepository;
+  private final SkillRepository skillRepository;
 
   /**
    * <p>Default constructor.</p>
@@ -33,16 +36,19 @@ public final class SharedFacadeAdapter implements SharedFacade {
    * @param roleRepository           role repository.
    * @param permissionRepository     permission repository.
    * @param employmentTypeRepository employment type repository.
+   * @param skillRepository          Skill repository.
    */
   public SharedFacadeAdapter(final CountryRepository countryRepository,
                              final RoleRepository roleRepository,
                              final PermissionRepository permissionRepository,
                              final EmploymentTypeRepository
-                                     employmentTypeRepository) {
+                                     employmentTypeRepository,
+                             final SkillRepository skillRepository) {
     this.countryRepository = countryRepository;
     this.roleRepository = roleRepository;
     this.permissionRepository = permissionRepository;
     this.employmentTypeRepository = employmentTypeRepository;
+    this.skillRepository = skillRepository;
   }
 
   @Override
@@ -107,5 +113,15 @@ public final class SharedFacadeAdapter implements SharedFacade {
   @Override
   public void addEmploymentType(final EmploymentType type) {
     this.employmentTypeRepository.save(type);
+  }
+
+  @Override
+  public Optional<Skill> findSkillByName(final String name) {
+    return this.skillRepository.findByName(name);
+  }
+
+  @Override
+  public void addSkill(final Skill skill) {
+    this.skillRepository.save(skill);
   }
 }

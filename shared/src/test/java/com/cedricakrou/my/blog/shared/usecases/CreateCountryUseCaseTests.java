@@ -7,6 +7,7 @@ import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
 import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
+import com.cedricakrou.my.blog.shared.application.repository.SkillRepository;
 import com.cedricakrou.my.blog.shared.application.usecase.CreateCountryUseCase;
 import com.cedricakrou.my.blog.shared.domain.entities.Country;
 import com.cedricakrou.my.blog.shared.facade.SharedFacadeImpl;
@@ -42,6 +43,7 @@ class CreateCountryUseCaseTests {
    */
   @BeforeEach
   public void setUp() {
+    SkillRepository skillRepository = mock(SkillRepository.class);
     EmploymentTypeRepository employmentTypeRepository = mock(EmploymentTypeRepository.class);
     RoleRepository roleRepository = mock(RoleRepository.class);
     PermissionRepository permissionRepository = mock(PermissionRepository.class);
@@ -50,7 +52,8 @@ class CreateCountryUseCaseTests {
             this.countryRepository,
             roleRepository,
             permissionRepository,
-            employmentTypeRepository);
+            employmentTypeRepository,
+            skillRepository);
   }
 
   /**

@@ -7,6 +7,7 @@ import com.cedricakrou.my.blog.shared.application.repository.CountryRepository;
 import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
 import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
+import com.cedricakrou.my.blog.shared.application.repository.SkillRepository;
 import com.cedricakrou.my.blog.shared.application.usecase.CreatePermissionUseCase;
 import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
@@ -41,6 +42,7 @@ class CreatePermissionUseCaseTests {
    */
   @BeforeEach
   void setUp() {
+    SkillRepository skillRepository = mock(SkillRepository.class);
     EmploymentTypeRepository employmentTypeRepository = mock(EmploymentTypeRepository.class);
     CountryRepository countryRepository = mock(CountryRepository.class);
     RoleRepository roleRepository = mock(RoleRepository.class);
@@ -50,7 +52,8 @@ class CreatePermissionUseCaseTests {
             countryRepository,
             roleRepository,
             this.permissionRepository,
-            employmentTypeRepository
+            employmentTypeRepository,
+            skillRepository
     );
     this.useCase = new CreatePermissionUseCase(sharedFacade);
 
