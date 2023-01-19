@@ -3,6 +3,8 @@ package com.cedricakrou.my.blog.adapter.integration.test;
 import com.cedricakrou.my.blog.adapter.common.AbstractIntegrationTest;
 import com.cedricakrou.my.blog.shared.application.command.CreateSkillCommand;
 import com.cedricakrou.my.blog.shared.application.repository.SkillRepository;
+import com.cedricakrou.my.blog.shared.domain.entities.Permission;
+import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import com.cedricakrou.my.blog.shared.domain.entities.Skill;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
@@ -19,6 +21,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 /**
  * <p>Integration test of Skill</p>
@@ -127,6 +132,32 @@ class SkillIntegrationTest extends AbstractIntegrationTest {
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
             .andExpect(MockMvcResultMatchers.status().isFound())
+            .andDo(MockMvcResultHandlers.print());
+  }
+
+  @Test
+  void getAllRSkills_ShouldBeSucceed() throws Exception {
+
+    String name = "Admin";
+    String description = "CIV";
+
+    this.skillRepository.save(new Skill(
+            UUID.randomUUID(),
+            true,
+            false,
+            name,
+            description
+    ));
+
+    mockMvc.perform(
+                    get("/skill")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers
+                    .jsonPath("$.length()")
+                    .value(1))
             .andDo(MockMvcResultHandlers.print());
   }
 }

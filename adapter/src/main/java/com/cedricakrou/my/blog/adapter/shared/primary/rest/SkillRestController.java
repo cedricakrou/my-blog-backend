@@ -1,10 +1,15 @@
 package com.cedricakrou.my.blog.adapter.shared.primary.rest;
 
 import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreateSkillForm;
+import com.cedricakrou.my.blog.adapter.shared.primary.rest.vm.SkillVm;
+import com.cedricakrou.my.blog.adapter.shared.secondary.services.query.SkillQueryService;
 import com.cedricakrou.my.blog.shared.application.command.CreateSkillCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.usecase.CreateSkillUseCase;
+import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +26,19 @@ public class SkillRestController {
 
   private final SharedFacade sharedFacade;
 
+  private final SkillQueryService skillQueryService;
+
   /**
    * <p>Default constructor.</p>
    *
-   * @param sharedFacade shared facade.
+   * @param sharedFacade      shared facade.
+   * @param skillQueryService skill query service
    */
   public SkillRestController(
-          final SharedFacade sharedFacade) {
+          final SharedFacade sharedFacade,
+          final SkillQueryService skillQueryService) {
     this.sharedFacade = sharedFacade;
+    this.skillQueryService = skillQueryService;
   }
 
   /**
@@ -53,5 +63,19 @@ public class SkillRestController {
     useCase.perform(command);
 
     return ResponseEntity.ok().build();
+  }
+
+  /**
+   * <p>find all skills.</p>
+   *
+   * @return list of skills.
+   */
+  @GetMapping("")
+  public ResponseEntity<List<SkillVm>> findAll() {
+
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(
+                    this.skillQueryService.findAll()
+            );
   }
 }
