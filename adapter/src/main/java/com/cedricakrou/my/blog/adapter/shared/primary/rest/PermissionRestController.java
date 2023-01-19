@@ -1,10 +1,15 @@
 package com.cedricakrou.my.blog.adapter.shared.primary.rest;
 
 import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreatePermissionForm;
+import com.cedricakrou.my.blog.adapter.shared.primary.rest.vm.PermissionVm;
+import com.cedricakrou.my.blog.adapter.shared.secondary.services.query.PermissionQueryService;
 import com.cedricakrou.my.blog.shared.application.command.CreatePermissionCommand;
 import com.cedricakrou.my.blog.shared.application.facade.SharedFacade;
 import com.cedricakrou.my.blog.shared.application.usecase.CreatePermissionUseCase;
+import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +25,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class PermissionRestController {
 
   private final SharedFacade sharedFacade;
+  private final PermissionQueryService permissionQueryService;
 
   /**
    * <p>Default constructor.</p>
    *
-   * @param sharedFacade shared facade.
+   * @param sharedFacade           shared facade.
+   * @param permissionQueryService permission query service.
    */
   public PermissionRestController(
-          final SharedFacade sharedFacade) {
+          final SharedFacade sharedFacade,
+          final PermissionQueryService permissionQueryService) {
     this.sharedFacade = sharedFacade;
+    this.permissionQueryService = permissionQueryService;
   }
 
   /**
@@ -53,5 +62,18 @@ public class PermissionRestController {
     useCase.perform(command);
 
     return ResponseEntity.ok().build();
+  }
+
+  /**
+   * <p>Get all permissions.</p>
+   *
+   * @return all permissions.
+   */
+  @GetMapping("")
+  public ResponseEntity<List<PermissionVm>> findAll() {
+
+    return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(this.permissionQueryService.findAll());
   }
 }

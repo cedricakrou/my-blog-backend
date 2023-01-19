@@ -21,6 +21,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 /**
  * <p>Integration tests for Permission.</p>
  *
@@ -129,6 +132,33 @@ class PermissionIntegrationTest extends AbstractIntegrationTest {
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
             .andExpect(MockMvcResultMatchers.status().isFound())
+            .andDo(MockMvcResultHandlers.print());
+  }
+
+  @Test
+  void getAllPermissions_ShouldBeSucceed() throws Exception {
+
+    String name = "Admin";
+    String description = "CIV";
+
+    this.permissionRepository.save(new Permission(
+            UUID.randomUUID(),
+            true,
+            false,
+            name,
+            description,
+            new Role[]{}
+    ));
+
+    mockMvc.perform(
+                    get("/permission")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers
+                    .jsonPath("$.length()")
+                    .value(1))
             .andDo(MockMvcResultHandlers.print());
   }
 }

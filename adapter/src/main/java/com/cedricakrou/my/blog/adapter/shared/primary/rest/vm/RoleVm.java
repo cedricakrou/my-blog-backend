@@ -1,7 +1,9 @@
 package com.cedricakrou.my.blog.adapter.shared.primary.rest.vm;
 
 import com.cedricakrou.my.blog.adapter.shared.secondary.entities.RoleEntity;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 /**
@@ -14,6 +16,7 @@ public class RoleVm {
   private final UUID id;
   private final String name;
   private final String description;
+  private final List<PermissionVm> permissions;
 
   /**
    * <p>Default constructor.</p>
@@ -24,5 +27,9 @@ public class RoleVm {
     this.id = roleEntity.getId();
     this.name = roleEntity.getName();
     this.description = roleEntity.getDescription();
+    this.permissions = roleEntity.getPermissions()
+            .stream()
+            .map(PermissionVm::new)
+            .collect(Collectors.toList());
   }
 }
