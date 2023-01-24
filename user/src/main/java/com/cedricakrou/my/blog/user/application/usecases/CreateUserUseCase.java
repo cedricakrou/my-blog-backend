@@ -63,8 +63,8 @@ public class CreateUserUseCase implements UseCase<CreateUserCommand> {
             true,
             false)
             .setEmail(email)
-            .setUsername(passwordGenerator.crypt(password))
-            .setPassword(password)
+            .setUsername(username)
+            .setPassword(passwordGenerator.crypt(password))
             .buildEntity();
 
     this.userFacade.saveUser(user);
