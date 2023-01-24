@@ -16,6 +16,7 @@ public class User extends Entity {
   private final String firstname;
   private final String lastname;
   private final String email;
+  private final String username;
   private final String[] phones;
   private final Address address;
   private final Role role;
@@ -28,12 +29,14 @@ public class User extends Entity {
   private final Experience currentJob;
   private final Work[] works;
   private final String cvLink;
+  private final String password;
 
   private User(final UserBuilder builder) {
     super(builder.getId(), builder.isEnabled(), builder.isDeleted());
     this.firstname = builder.firstname;
     this.lastname = builder.lastname;
     this.email = builder.email;
+    this.username = builder.username;
     this.phones = builder.phones;
     this.address = builder.address;
     this.role = builder.role;
@@ -46,12 +49,14 @@ public class User extends Entity {
     this.currentJob = builder.currentJob;
     this.works = builder.works;
     this.cvLink = builder.cvLink;
+    this.password = builder.password;
   }
 
   public static class UserBuilder extends AbstractEntityBuilder<User> {
     private String firstname;
     private String lastname;
     private String email;
+    private String username;
     private String[] phones;
     private Address address;
     private Role role;
@@ -64,6 +69,7 @@ public class User extends Entity {
     private Experience currentJob;
     private Work[] works;
     private String cvLink;
+    private String password;
 
     /**
      * <p>Default constructor.</p>
@@ -72,7 +78,7 @@ public class User extends Entity {
      * @param enabled enabled.
      * @param deleted deleted.
      */
-    protected UserBuilder(
+    public UserBuilder(
             final UUID id,
             final boolean enabled,
             final boolean deleted) {
@@ -109,6 +115,17 @@ public class User extends Entity {
      **/
     public UserBuilder setEmail(final String email) {
       this.email = email;
+      return this;
+    }
+
+    /**
+     * <p>Change Username value.</p>
+     *
+     * @param username username.
+     * @return UserBuilder.
+     **/
+    public UserBuilder setUsername(final String username) {
+      this.username = username;
       return this;
     }
 
@@ -241,6 +258,17 @@ public class User extends Entity {
      **/
     public UserBuilder setCvLink(final String cvLink) {
       this.cvLink = cvLink;
+      return this;
+    }
+
+    /**
+     * <p>Update password value.</p>
+     *
+     * @param password password.
+     * @return UserBuilder.
+     */
+    public UserBuilder setPassword(final String password) {
+      this.password = password;
       return this;
     }
 
