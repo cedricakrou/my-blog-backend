@@ -151,7 +151,7 @@ class CreateUserUseCasesTests {
 
     this.createUserUseCase = new CreateUserUseCase(this.userFacade);
 
-    Mockito.when(this.userRepository.findByEmailOrUsername(email)).thenReturn(Optional.of(user));
+    Mockito.when(this.userRepository.findByEmailOrUsername(email, username)).thenReturn(Optional.of(user));
 
     Exception exception = Assertions.assertThrows(
             AlreadyExistsException.class,

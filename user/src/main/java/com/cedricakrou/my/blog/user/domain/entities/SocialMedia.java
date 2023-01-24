@@ -1,7 +1,7 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
 import com.cedricakrou.library.generic.aggregate.domain.AbstractEntityBuilder;
-import com.cedricakrou.library.generic.aggregate.domain.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.DomainEntityRoot;
 import java.util.UUID;
 
 /**
@@ -9,7 +9,7 @@ import java.util.UUID;
  *
  * @author KAKOU Akrou Cedric 2023-01-07
  */
-public class SocialMedia extends Entity {
+public class SocialMedia extends DomainEntityRoot {
 
   private final String label;
   private final String link;

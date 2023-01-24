@@ -1,17 +1,19 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
 import com.cedricakrou.library.generic.aggregate.domain.AbstractEntityBuilder;
-import com.cedricakrou.library.generic.aggregate.domain.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.DomainEntityRoot;
 import com.cedricakrou.my.blog.user.domain.value.objects.Address;
 import com.cedricakrou.my.blog.user.domain.value.objects.Role;
 import java.util.UUID;
+import lombok.Getter;
 
 /**
  * <p>Entity representing User.</p>
  *
  * @author KAKOU Akrou Cedric 2023-01-06
  */
-public class User extends Entity {
+@Getter
+public class User extends DomainEntityRoot {
 
   private final String firstname;
   private final String lastname;

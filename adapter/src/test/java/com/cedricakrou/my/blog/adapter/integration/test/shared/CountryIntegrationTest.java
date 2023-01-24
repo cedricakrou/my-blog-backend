@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.adapter.integration.test;
+package com.cedricakrou.my.blog.adapter.integration.test.shared;
 
 import com.cedricakrou.my.blog.adapter.common.AbstractIntegrationTest;
 import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreateCountryForm;

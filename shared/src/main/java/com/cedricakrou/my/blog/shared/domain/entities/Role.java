@@ -1,6 +1,6 @@
 package com.cedricakrou.my.blog.shared.domain.entities;
 
-import com.cedricakrou.library.generic.aggregate.domain.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.DomainEntityRoot;
 import java.util.UUID;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  * @author KAKOU Akrou Cedric 2023-01-09
  */
 @Getter
-public class Role extends Entity {
+public class Role extends DomainEntityRoot {
 
   private final String name;
   private String description;

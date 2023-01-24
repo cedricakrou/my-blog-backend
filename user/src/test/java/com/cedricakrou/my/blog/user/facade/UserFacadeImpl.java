@@ -21,14 +21,14 @@ public class UserFacadeImpl implements UserFacade {
   @Override
   public boolean isUserCredentialsExists(String email, String username) {
 
-    Optional<User> user = this.userRepository.findByEmailOrUsername(email);
+    Optional<User> user = this.userRepository.findByEmailOrUsername(email, username);
 
     return user.isPresent() && !user.get().isDeleted();
   }
 
   @Override
   public Optional<User> findUserByEmail(String email) {
-    return this.userRepository.findByEmailOrUsername(email);
+    return this.userRepository.findByEmail(email);
   }
 
   @Override

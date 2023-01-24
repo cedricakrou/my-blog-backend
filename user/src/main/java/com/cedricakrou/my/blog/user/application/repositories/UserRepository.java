@@ -21,10 +21,11 @@ public interface UserRepository {
   /**
    * <p>Find user by email or username .</p>
    *
-   * @param emailOrUsername email or username.
+   * @param email    email.
+   * @param username username.
    * @return user or empty.
    */
-  Optional<User> findByEmailOrUsername(String emailOrUsername);
+  Optional<User> findByEmailOrUsername(String email, String username);
 
   /**
    * <p>Save a new user.</p>

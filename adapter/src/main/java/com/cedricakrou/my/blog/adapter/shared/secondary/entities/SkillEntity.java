@@ -1,6 +1,6 @@
 package com.cedricakrou.my.blog.adapter.shared.secondary.entities;
 
-import com.cedricakrou.library.generic.adapter.EntityRoot;
+import com.cedricakrou.library.generic.adapter.DatabaseEntityRoot;
 import com.cedricakrou.my.blog.shared.domain.entities.Skill;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -16,7 +16,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "skill")
 @Getter
-public class SkillEntity extends EntityRoot {
+public class SkillEntity extends DatabaseEntityRoot<Skill> {
 
   @Column(name = "name", unique = true)
   private String name;
