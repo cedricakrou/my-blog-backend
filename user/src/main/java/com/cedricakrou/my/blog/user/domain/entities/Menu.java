@@ -1,7 +1,7 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
 import com.cedricakrou.library.generic.aggregate.domain.AbstractEntityBuilder;
-import com.cedricakrou.library.generic.aggregate.domain.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.DomainEntityRoot;
 import java.util.UUID;
 import lombok.Getter;
 
@@ -11,7 +11,7 @@ import lombok.Getter;
  * @author KAKOU Akrou Cedric 2023-01-06
  */
 @Getter
-public class Menu extends Entity {
+public class Menu extends DomainEntityRoot {
   private final String label;
   private final String description;
   private final int order;

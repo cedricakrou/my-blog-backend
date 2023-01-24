@@ -9,7 +9,7 @@ import lombok.Getter;
  * @author KAKOU Akrou Cedric 2023-01-06
  */
 @Getter
-public class Entity extends CommonProperties {
+public class DomainEntityRoot extends CommonProperties {
   private final UUID id;
 
   /**
@@ -19,7 +19,9 @@ public class Entity extends CommonProperties {
    * @param enabled Enabled
    * @param deleted Deleted.
    */
-  public Entity(final UUID id, final boolean enabled, final boolean deleted) {
+  public DomainEntityRoot(final UUID id,
+                          final boolean enabled,
+                          final boolean deleted) {
     super(enabled, deleted);
     this.id = id;
   }

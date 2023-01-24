@@ -1,7 +1,7 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
 import com.cedricakrou.library.generic.aggregate.domain.AbstractEntityBuilder;
-import com.cedricakrou.library.generic.aggregate.domain.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.DomainEntityRoot;
 import com.cedricakrou.my.blog.user.domain.value.objects.EmploymentType;
 import com.cedricakrou.my.blog.user.domain.value.objects.Skill;
 import com.cedricakrou.my.blog.user.domain.value.objects.Task;
@@ -12,7 +12,7 @@ import java.util.UUID;
  *
  * @author KAKOU Akrou Cedric 2023-01-06
  */
-public class Experience extends Entity {
+public class Experience extends DomainEntityRoot {
 
   private final String title;
   private final String description;

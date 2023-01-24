@@ -1,6 +1,6 @@
 package com.cedricakrou.my.blog.adapter.shared.secondary.entities;
 
-import com.cedricakrou.library.generic.adapter.EntityRoot;
+import com.cedricakrou.library.generic.adapter.DatabaseEntityRoot;
 import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "role")
 @Getter
-public class RoleEntity extends EntityRoot {
+public class RoleEntity extends DatabaseEntityRoot<Role> {
 
   @Column(name = "name", unique = true)
   private String name;

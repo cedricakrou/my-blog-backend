@@ -1,10 +1,9 @@
-package com.cedricakrou.my.blog.adapter.integration.test;
+package com.cedricakrou.my.blog.adapter.integration.test.shared;
 
 import com.cedricakrou.my.blog.adapter.common.AbstractIntegrationTest;
-import com.cedricakrou.my.blog.shared.application.command.CreateSkillCommand;
-import com.cedricakrou.my.blog.shared.application.repository.SkillRepository;
-import com.cedricakrou.my.blog.shared.domain.entities.Permission;
-import com.cedricakrou.my.blog.shared.domain.entities.Role;
+import com.cedricakrou.my.blog.shared.application.command.CreateEmploymentTypeCommand;
+import com.cedricakrou.my.blog.shared.application.repository.EmploymentTypeRepository;
+import com.cedricakrou.my.blog.shared.domain.entities.EmploymentType;
 import com.cedricakrou.my.blog.shared.domain.entities.Skill;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
@@ -26,28 +25,26 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 /**
- * <p>Integration test of Skill</p>
- *
  * @author KAKOU Akrou Cedric 2023-01-18
  */
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@DisplayNameGeneration(DisplayNameGenerator.Simple.class)
-class SkillIntegrationTest extends AbstractIntegrationTest {
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+class EmploymentTypeIntegrationTest extends AbstractIntegrationTest {
 
   @Autowired
   MockMvc mockMvc;
 
   @Autowired
-  SkillRepository skillRepository;
+  EmploymentTypeRepository employmentTypeRepository;
 
   /**
    * <p>Run before each test.</p>
    */
   @BeforeEach
   void setup() {
-    this.skillRepository.deleteAll();
+    this.employmentTypeRepository.deleteAll();
   }
 
   /**
@@ -56,24 +53,24 @@ class SkillIntegrationTest extends AbstractIntegrationTest {
    * </p>
    */
   @Test
-  void createSkill_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() throws Exception {
+  void createPermission_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() throws Exception {
 
     String name = "";
     String description = "";
 
-    CreateSkillCommand form = new CreateSkillCommand(
+    CreateEmploymentTypeCommand form = new CreateEmploymentTypeCommand(
             name,
             description
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/skill")
+    mockMvc.perform(MockMvcRequestBuilders.post("/employment-type")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
             .andExpect(MockMvcResultMatchers.status().isExpectationFailed())
             .andExpect(MockMvcResultMatchers
                     .jsonPath("$.message")
-                    .value("name: Skill name is mandatory !"))
+                    .value("name: Employment type name is mandatory !"))
             .andDo(MockMvcResultHandlers.print());
 
   }
@@ -84,16 +81,17 @@ class SkillIntegrationTest extends AbstractIntegrationTest {
    * </p>
    */
   @Test
-  void createSkill_shouldBeSucceed() throws Exception {
-    String name = "READ";
+  void createPermission_shouldBeSucceed() throws Exception {
+
+    String name = "STAGE";
     String description = "";
 
-    CreateSkillCommand form = new CreateSkillCommand(
+    CreateEmploymentTypeCommand form = new CreateEmploymentTypeCommand(
             name,
             description
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/skill")
+    mockMvc.perform(MockMvcRequestBuilders.post("/employment-type")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
@@ -107,27 +105,27 @@ class SkillIntegrationTest extends AbstractIntegrationTest {
    * </p>
    */
   @Test
-  void createSkill_shouldBeFailedWhenRoleNameExistsAlready() throws Exception {
+  void createPermission_shouldBeFailedWhenRoleNameExistsAlready() throws Exception {
 
     String name = "READ";
     String description = "";
 
-    Skill skill = new Skill(
+    EmploymentType permission = new EmploymentType(
             UUID.randomUUID(),
             false,
             true,
             name,
             description);
 
-    this.skillRepository.save(skill);
+    this.employmentTypeRepository.save(permission);
 
 
-    CreateSkillCommand form = new CreateSkillCommand(
+    CreateEmploymentTypeCommand form = new CreateEmploymentTypeCommand(
             name,
             description
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/skill")
+    mockMvc.perform(MockMvcRequestBuilders.post("/employment-type")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
@@ -136,12 +134,12 @@ class SkillIntegrationTest extends AbstractIntegrationTest {
   }
 
   @Test
-  void getAllSkills_ShouldBeSucceed() throws Exception {
+  void getAllEmploymentType_ShouldBeSucceed() throws Exception {
 
-    String name = "Admin";
-    String description = "CIV";
+    String name = "Stage";
+    String description = "";
 
-    this.skillRepository.save(new Skill(
+    this.employmentTypeRepository.save(new EmploymentType(
             UUID.randomUUID(),
             true,
             false,
@@ -150,7 +148,7 @@ class SkillIntegrationTest extends AbstractIntegrationTest {
     ));
 
     mockMvc.perform(
-                    get("/skill")
+                    get("/employment-type")
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON)
             )

@@ -1,8 +1,8 @@
-package com.cedricakrou.my.blog.adapter.integration.test;
+package com.cedricakrou.my.blog.adapter.integration.test.shared;
 
 import com.cedricakrou.my.blog.adapter.common.AbstractIntegrationTest;
-import com.cedricakrou.my.blog.shared.application.command.CreatePermissionCommand;
-import com.cedricakrou.my.blog.shared.application.repository.PermissionRepository;
+import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreateRoleForm;
+import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,54 +25,52 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 /**
- * <p>Integration tests for Permission.</p>
- *
  * @author KAKOU Akrou Cedric 2023-01-18
  */
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class PermissionIntegrationTest extends AbstractIntegrationTest {
+class RoleIntegrationTest extends AbstractIntegrationTest {
 
   @Autowired
   MockMvc mockMvc;
 
   @Autowired
-  PermissionRepository permissionRepository;
+  RoleRepository roleRepository;
 
   /**
    * <p>Run before each test.</p>
    */
   @BeforeEach
   void setup() {
-    permissionRepository.deleteAll();
+    roleRepository.deleteAll();
   }
 
   /**
    * <p>
-   * This test must fail when we want to create Permission with an incorrect command element.
+   * This test must fail when we want to create Role with an incorrect command element.
    * </p>
    */
   @Test
-  void createPermission_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() throws Exception {
+  void createRole_shouldBeFailedWhenAtLeastOneElementOfCommandIsNotCorrect() throws Exception {
 
-    String name = "";
+    String roleName = "";
     String description = "";
 
-    CreatePermissionCommand form = new CreatePermissionCommand(
-            name,
+    CreateRoleForm form = new CreateRoleForm(
+            roleName,
             description
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/permission")
+    mockMvc.perform(MockMvcRequestBuilders.post("/role")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
             .andExpect(MockMvcResultMatchers.status().isExpectationFailed())
             .andExpect(MockMvcResultMatchers
                     .jsonPath("$.message")
-                    .value("name: Permission name is mandatory !"))
+                    .value("name: Role name is mandatory !"))
             .andDo(MockMvcResultHandlers.print());
 
   }
@@ -83,16 +81,16 @@ class PermissionIntegrationTest extends AbstractIntegrationTest {
    * </p>
    */
   @Test
-  void createPermission_shouldBeSucceed() throws Exception {
-    String name = "READ";
+  void createRole_shouldBeSucceed() throws Exception {
+    String roleName = "ADMIN";
     String description = "";
 
-    CreatePermissionCommand form = new CreatePermissionCommand(
-            name,
+    CreateRoleForm form = new CreateRoleForm(
+            roleName,
             description
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/permission")
+    mockMvc.perform(MockMvcRequestBuilders.post("/role")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
@@ -102,32 +100,32 @@ class PermissionIntegrationTest extends AbstractIntegrationTest {
 
   /**
    * <p>
-   * This test must fail when Permission Name Exists Already.
+   * This test must fail when Role Name Exists Already.
    * </p>
    */
   @Test
-  void createPermission_shouldBeFailedWhenRoleNameExistsAlready() throws Exception {
+  void createRole_shouldBeFailedWhenRoleNameExistsAlready() throws Exception {
 
-    String name = "READ";
+    String roleName = "ADMIN";
     String description = "";
 
-    Permission permission = new Permission(
+    Role role = new Role(
             UUID.randomUUID(),
             false,
             true,
-            name,
+            roleName,
             description,
-            new Role[]{});
+            new Permission[]{});
 
-    this.permissionRepository.save(permission);
+    this.roleRepository.save(role);
 
 
-    CreatePermissionCommand form = new CreatePermissionCommand(
-            name,
+    CreateRoleForm form = new CreateRoleForm(
+            roleName,
             description
     );
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/permission")
+    mockMvc.perform(MockMvcRequestBuilders.post("/role")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(form)))
@@ -136,22 +134,22 @@ class PermissionIntegrationTest extends AbstractIntegrationTest {
   }
 
   @Test
-  void getAllPermissions_ShouldBeSucceed() throws Exception {
+  void getAllRoles_ShouldBeSucceed() throws Exception {
 
     String name = "Admin";
     String description = "CIV";
 
-    this.permissionRepository.save(new Permission(
+    this.roleRepository.save(new Role(
             UUID.randomUUID(),
             true,
             false,
             name,
             description,
-            new Role[]{}
+            new Permission[]{}
     ));
 
     mockMvc.perform(
-                    get("/permission")
+                    get("/role")
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON)
             )

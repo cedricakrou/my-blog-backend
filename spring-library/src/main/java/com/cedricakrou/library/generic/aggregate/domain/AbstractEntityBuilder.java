@@ -10,7 +10,7 @@ import lombok.Getter;
  * @author KAKOU Akrou Cedric 2023-01-06
  */
 @Getter
-public abstract class AbstractEntityBuilder<T extends Entity> {
+public abstract class AbstractEntityBuilder<T extends DomainEntityRoot> {
 
   private final UUID id;
   private final boolean enabled;

@@ -1,7 +1,7 @@
 package com.cedricakrou.my.blog.user.domain.entities;
 
 import com.cedricakrou.library.generic.aggregate.domain.AbstractEntityBuilder;
-import com.cedricakrou.library.generic.aggregate.domain.Entity;
+import com.cedricakrou.library.generic.aggregate.domain.DomainEntityRoot;
 import com.cedricakrou.my.blog.user.domain.value.objects.Skill;
 import java.util.UUID;
 
@@ -10,7 +10,7 @@ import java.util.UUID;
  *
  * @author KAKOU Akrou Cedric 2023-01-07
  */
-public class Work extends Entity {
+public class Work extends DomainEntityRoot {
 
   private final String title;
   private final String description;
