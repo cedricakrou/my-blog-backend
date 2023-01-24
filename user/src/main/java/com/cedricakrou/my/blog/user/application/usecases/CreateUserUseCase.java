@@ -2,6 +2,7 @@ package com.cedricakrou.my.blog.user.application.usecases;
 
 import com.cedricakrou.library.generic.aggregate.application.UseCase;
 import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
+import com.cedricakrou.library.helper.password.PasswordGenerator;
 import com.cedricakrou.library.helper.password.PasswordGeneratorImpl;
 import com.cedricakrou.my.blog.user.application.commands.CreateUserCommand;
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
@@ -51,15 +52,18 @@ public class CreateUserUseCase implements UseCase<CreateUserCommand> {
       );
     }
 
+    PasswordGenerator passwordGenerator = new PasswordGeneratorImpl();
+
     int passwordSize = 8;
-    String password = new PasswordGeneratorImpl().execute(true, passwordSize);
+    String password = passwordGenerator
+            .generateRandomPassword(true, passwordSize);
 
     User user = new User.UserBuilder(
             UUID.randomUUID(),
             true,
             false)
             .setEmail(email)
-            .setUsername(username)
+            .setUsername(passwordGenerator.crypt(password))
             .setPassword(password)
             .buildEntity();
 

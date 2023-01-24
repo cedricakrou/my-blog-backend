@@ -13,7 +13,7 @@ class PasswordGeneratorTest {
 
   @Test
   void generatePassword_shouldStrongAndHave8Characters() {
-    String password = new PasswordGeneratorImpl().execute(true, 8);
+    String password = new PasswordGeneratorImpl().generateRandomPassword(true, 8);
 
     Assertions.assertNotNull(password);
     Assertions.assertEquals(8, password.length());
@@ -22,7 +22,7 @@ class PasswordGeneratorTest {
 
   @Test
   void generatePassword_shouldWeakAndHave3Characters() {
-    String password = new PasswordGeneratorImpl().execute(true, 3);
+    String password = new PasswordGeneratorImpl().generateRandomPassword(true, 3);
 
     Assertions.assertNotNull(password);
     Assertions.assertEquals(8, password.length());
