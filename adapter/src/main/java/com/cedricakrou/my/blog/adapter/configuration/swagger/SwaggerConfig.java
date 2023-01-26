@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.adapter.configuration;
+package com.cedricakrou.my.blog.adapter.configuration.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,11 +2,14 @@ package com.cedricakrou.my.blog.user.application.usecases;
 
 import com.cedricakrou.library.generic.aggregate.application.UseCase;
 import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
+import com.cedricakrou.library.generic.event.EventManager;
 import com.cedricakrou.library.helper.password.PasswordGenerator;
 import com.cedricakrou.library.helper.password.PasswordGeneratorImpl;
 import com.cedricakrou.my.blog.user.application.commands.CreateUserCommand;
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
 import com.cedricakrou.my.blog.user.domain.entities.User;
+import com.cedricakrou.my.blog.user.application.playload.CreateUserEventPayload;
+import com.cedricakrou.my.blog.user.domain.event.CreateUserEvent;
 import java.util.UUID;
 import java.util.logging.Logger;
 import lombok.SneakyThrows;
@@ -22,14 +25,18 @@ public class CreateUserUseCase implements UseCase<CreateUserCommand> {
           Logger.getLogger(CreateUserUseCase.class.getName());
 
   private final UserFacade userFacade;
+  private final EventManager<CreateUserEventPayload> eventManager;
 
   /**
    * <p>Default constructor.</p>
    *
    * @param userFacade User facade.
+   * @param eventManager Create User Event.
    */
-  public CreateUserUseCase(final UserFacade userFacade) {
+  public CreateUserUseCase(final UserFacade userFacade,
+                           final CreateUserEvent eventManager) {
     this.userFacade = userFacade;
+    this.eventManager = eventManager;
   }
 
   /**
@@ -68,6 +75,15 @@ public class CreateUserUseCase implements UseCase<CreateUserCommand> {
             .buildEntity();
 
     this.userFacade.saveUser(user);
+
+    this.eventManager.publish(
+            new CreateUserEventPayload(
+                    email,
+                    password
+            )
+    );
+
+    // TODO send event sourcing event
 
     this.logger.info("User created !");
   }

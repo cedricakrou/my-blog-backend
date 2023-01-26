@@ -1,11 +1,15 @@
 package com.cedricakrou.my.blog.user.usecases;
 
 import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
+import com.cedricakrou.library.generic.event.EventManager;
 import com.cedricakrou.my.blog.user.application.commands.CreateUserCommand;
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
+import com.cedricakrou.my.blog.user.application.playload.CreateUserEventPayload;
 import com.cedricakrou.my.blog.user.application.repositories.UserRepository;
 import com.cedricakrou.my.blog.user.application.usecases.CreateUserUseCase;
 import com.cedricakrou.my.blog.user.domain.entities.User;
+import com.cedricakrou.my.blog.user.domain.event.CreateUserEvent;
+import com.cedricakrou.my.blog.user.event.CreateUserEventImpl;
 import com.cedricakrou.my.blog.user.facade.UserFacadeImpl;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,17 +29,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class CreateUserUseCasesTests {
 
-  private UserFacade userFacade;
   private UserRepository userRepository;
   private CreateUserUseCase createUserUseCase;
-
 
   @BeforeEach
   void setUp() {
     this.userRepository = Mockito.mock(UserRepository.class);
-    this.userFacade = new UserFacadeImpl(this.userRepository);
-
-    this.createUserUseCase = new CreateUserUseCase(this.userFacade);
+    UserFacade userFacade = new UserFacadeImpl(this.userRepository);
+    CreateUserEvent createUserEvent = new CreateUserEventImpl();
+    this.createUserUseCase = new CreateUserUseCase(userFacade, createUserEvent);
   }
 
   @Test
@@ -45,8 +47,6 @@ class CreateUserUseCasesTests {
             "",
             "Username"
     );
-
-    this.createUserUseCase = new CreateUserUseCase(this.userFacade);
 
     Exception exception = Assertions.assertThrows(
             ConstraintViolationException.class,
@@ -66,8 +66,6 @@ class CreateUserUseCasesTests {
             "Username"
     );
 
-    this.createUserUseCase = new CreateUserUseCase(this.userFacade);
-
     Exception exception = Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> this.createUserUseCase.perform(command)
@@ -86,8 +84,6 @@ class CreateUserUseCasesTests {
             ""
     );
 
-    this.createUserUseCase = new CreateUserUseCase(this.userFacade);
-
     Exception exception = Assertions.assertThrows(
             ConstraintViolationException.class,
             () -> this.createUserUseCase.perform(command)
@@ -104,8 +100,6 @@ class CreateUserUseCasesTests {
             "cedriakrou@gmail.com",
             "si"
     );
-
-    this.createUserUseCase = new CreateUserUseCase(this.userFacade);
 
     Exception exception = Assertions.assertThrows(
             ConstraintViolationException.class,
@@ -124,8 +118,6 @@ class CreateUserUseCasesTests {
             "cedriakrou@gmail.com",
             "cedricakrou"
     );
-
-    this.createUserUseCase = new CreateUserUseCase(this.userFacade);
 
     this.createUserUseCase.perform(command);
 
@@ -149,8 +141,6 @@ class CreateUserUseCasesTests {
             .setEmail(email)
             .buildEntity();
 
-    this.createUserUseCase = new CreateUserUseCase(this.userFacade);
-
     Mockito.when(this.userRepository.findByEmailOrUsername(email, username)).thenReturn(Optional.of(user));
 
     Exception exception = Assertions.assertThrows(
@@ -162,4 +152,6 @@ class CreateUserUseCasesTests {
             "User already exists with this username !",
             exception.getMessage());
   }
+
+
 }
