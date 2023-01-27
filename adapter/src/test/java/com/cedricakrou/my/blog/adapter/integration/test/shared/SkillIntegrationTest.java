@@ -3,8 +3,6 @@ package com.cedricakrou.my.blog.adapter.integration.test.shared;
 import com.cedricakrou.my.blog.adapter.common.AbstractIntegrationTest;
 import com.cedricakrou.my.blog.shared.application.command.CreateSkillCommand;
 import com.cedricakrou.my.blog.shared.application.repository.SkillRepository;
-import com.cedricakrou.my.blog.shared.domain.entities.Permission;
-import com.cedricakrou.my.blog.shared.domain.entities.Role;
 import com.cedricakrou.my.blog.shared.domain.entities.Skill;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
@@ -33,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@DisplayNameGeneration(DisplayNameGenerator.Simple.class)
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SkillIntegrationTest extends AbstractIntegrationTest {
 
   @Autowired
