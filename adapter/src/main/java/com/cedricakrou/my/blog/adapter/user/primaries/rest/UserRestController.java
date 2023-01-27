@@ -4,6 +4,7 @@ import com.cedricakrou.my.blog.adapter.user.primaries.rest.form.CreateUserForm;
 import com.cedricakrou.my.blog.user.application.commands.CreateUserCommand;
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
 import com.cedricakrou.my.blog.user.application.usecases.CreateUserUseCase;
+import com.cedricakrou.my.blog.user.domain.event.CreateUserEvent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,14 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 class UserRestController {
 
   private final UserFacade userFacade;
+  private final CreateUserEvent createUserEvent;
 
   /**
    * <p>Default constructor.</p>
    *
    * @param userFacade user facade.
+   * @param createUserEvent create user event.
    */
-  UserRestController(final UserFacade userFacade) {
+  UserRestController(final UserFacade userFacade,
+                     final CreateUserEvent createUserEvent) {
     this.userFacade = userFacade;
+    this.createUserEvent = createUserEvent;
   }
 
   /**
@@ -44,7 +49,8 @@ class UserRestController {
     );
 
     CreateUserUseCase useCase = new CreateUserUseCase(
-            this.userFacade
+            this.userFacade,
+            createUserEvent
     );
 
     useCase.perform(command);

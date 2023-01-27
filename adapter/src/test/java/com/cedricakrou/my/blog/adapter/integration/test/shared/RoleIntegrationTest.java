@@ -1,7 +1,7 @@
 package com.cedricakrou.my.blog.adapter.integration.test.shared;
 
 import com.cedricakrou.my.blog.adapter.common.AbstractIntegrationTest;
-import com.cedricakrou.my.blog.adapter.shared.primary.rest.form.CreateRoleForm;
+import com.cedricakrou.my.blog.adapter.shared.primaries.rest.form.CreateRoleForm;
 import com.cedricakrou.my.blog.shared.application.repository.RoleRepository;
 import com.cedricakrou.my.blog.shared.domain.entities.Permission;
 import com.cedricakrou.my.blog.shared.domain.entities.Role;
