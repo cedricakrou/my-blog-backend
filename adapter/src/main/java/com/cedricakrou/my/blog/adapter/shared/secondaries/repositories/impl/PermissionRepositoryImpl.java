@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.adapter.integration.test.shared.impl;
+package com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.impl;
 
 import com.cedricakrou.my.blog.adapter.shared.secondaries.entities.PermissionEntity;
 import com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.jpa.PgPermissionRepository;
@@ -9,18 +9,30 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 /**
+ * <p>Implementation of {@link PermissionRepository}.</p>
+ *
  * @author KAKOU Akrou Cedric 2023-01-18
  */
 @Service
-class PermissionRepositoryImpl implements PermissionRepository {
+public class PermissionRepositoryImpl implements PermissionRepository {
 
   private final PgPermissionRepository pgPermissionRepository;
 
-  PermissionRepositoryImpl(
+  /**
+   * <p>Default constructor.</p>
+   *
+   * @param pgPermissionRepository permission repository.
+   */
+  public PermissionRepositoryImpl(
           final PgPermissionRepository pgPermissionRepository) {
     this.pgPermissionRepository = pgPermissionRepository;
   }
 
+  /**
+   * <p>save permission.</p>
+   *
+   * @param permission the new permission.
+   */
   @Transactional
   @Override
   public void save(final Permission permission) {
@@ -29,6 +41,12 @@ class PermissionRepositoryImpl implements PermissionRepository {
     this.pgPermissionRepository.save(entity);
   }
 
+  /**
+   * <p>find permission by name.</p>
+   *
+   * @param name the permission name.
+   * @return permission or empty.
+   */
   @Override
   public Optional<Permission> findByName(final String name) {
 
@@ -44,6 +62,9 @@ class PermissionRepositoryImpl implements PermissionRepository {
     return Optional.empty();
   }
 
+  /**
+   * <p>delete all permissions.</p>
+   */
   @Override
   public void deleteAll() {
     this.pgPermissionRepository.deleteAll();

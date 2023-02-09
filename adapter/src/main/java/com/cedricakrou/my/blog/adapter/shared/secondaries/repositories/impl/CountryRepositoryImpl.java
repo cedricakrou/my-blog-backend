@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.adapter.integration.test.shared.impl;
+package com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.impl;
 
 import com.cedricakrou.my.blog.adapter.shared.secondaries.entities.CountryEntity;
 import com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.jpa.PgCountryRepository;
@@ -24,10 +24,16 @@ public class CountryRepositoryImpl implements CountryRepository {
    *
    * @param pgCountryRepository Jpa country Repository.
    */
-  CountryRepositoryImpl(final PgCountryRepository pgCountryRepository) {
+  public CountryRepositoryImpl(final PgCountryRepository pgCountryRepository) {
     this.pgCountryRepository = pgCountryRepository;
   }
 
+  /**
+   * <p>Find Country By Id.</p>
+   *
+   * @param id Country identifier.
+   * @return country or empty.
+   */
   @Override
   public Optional<Country> findById(final UUID id) {
 
@@ -37,6 +43,12 @@ public class CountryRepositoryImpl implements CountryRepository {
     return transformOptionCountryEntityToOptionalCountry(optionalCountry);
   }
 
+  /**
+   * <p>Find Country By Name.</p>
+   *
+   * @param name Country name.
+   * @return country or empty.
+   */
   @Override
   public Optional<Country> findByName(final String name) {
 
@@ -46,6 +58,12 @@ public class CountryRepositoryImpl implements CountryRepository {
     return transformOptionCountryEntityToOptionalCountry(optionalCountry);
   }
 
+  /**
+   * <p>Find By Iso Code.</p>
+   *
+   * @param isoCode Country iso code.
+   * @return country or empty.
+   */
   @Override
   public Optional<Country> findByIsoCode(final String isoCode) {
     Optional<CountryEntity> optionalCountry =
@@ -54,6 +72,12 @@ public class CountryRepositoryImpl implements CountryRepository {
     return transformOptionCountryEntityToOptionalCountry(optionalCountry);
   }
 
+  /**
+   * <p>Find By Indicative.</p>
+   *
+   * @param indicative Country indicative.
+   * @return country or empty.
+   */
   @Override
   public Optional<Country> findByIndicative(final int indicative) {
 
@@ -63,6 +87,11 @@ public class CountryRepositoryImpl implements CountryRepository {
     return transformOptionCountryEntityToOptionalCountry(optionalCountry);
   }
 
+  /**
+   * <p>Save country.</p>
+   *
+   * @param country Country.
+   */
   @Transactional
   @Override
   public void save(final Country country) {
@@ -70,15 +99,16 @@ public class CountryRepositoryImpl implements CountryRepository {
     this.pgCountryRepository.save(countryEntity);
   }
 
+  /**
+   * <p>Delete all countries.</p>
+   */
   @Override
   public void deleteAll() {
     this.pgCountryRepository.deleteAll();
   }
 
   /**
-   * <p>
-   * From optionalCountryEntity To optionalCountry.
-   * </p>
+   * <p>From optionalCountryEntity To optionalCountry.</p>
    *
    * @param optionalCountry optional country.
    * @return Option Country.
@@ -92,6 +122,5 @@ public class CountryRepositoryImpl implements CountryRepository {
     }
 
     return Optional.empty();
-
   }
 }

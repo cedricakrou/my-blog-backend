@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.adapter.integration.test.shared.impl;
+package com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.impl;
 
 import com.cedricakrou.my.blog.adapter.shared.secondaries.entities.RoleEntity;
 import com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.jpa.PgRoleRepository;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author KAKOU Akrou Cedric 2023-01-17
  */
 @Service
-public final class RoleRepositoryImpl implements RoleRepository {
+public class RoleRepositoryImpl implements RoleRepository {
 
   private final PgRoleRepository pgRoleRepository;
 
@@ -27,6 +27,11 @@ public final class RoleRepositoryImpl implements RoleRepository {
     this.pgRoleRepository = pgRoleRepository;
   }
 
+  /**
+   * <p>Save the role.</p>
+   *
+   * @param role the new role.
+   */
   @Transactional
   @Override
   public void save(final Role role) {
@@ -35,6 +40,11 @@ public final class RoleRepositoryImpl implements RoleRepository {
     this.pgRoleRepository.save(roleEntity);
   }
 
+  /**
+   * <p>Find by name.</p>
+   *
+   * @param roleName role name.
+   */
   @Override
   public Optional<Role> findByName(final String roleName) {
 
@@ -51,6 +61,9 @@ public final class RoleRepositoryImpl implements RoleRepository {
     return Optional.empty();
   }
 
+  /**
+   * <p>Delete all.</p>
+   */
   @Override
   public void deleteAll() {
     this.pgRoleRepository.deleteAll();
