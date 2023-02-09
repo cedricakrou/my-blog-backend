@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.adapter.integration.test.shared.impl;
+package com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.impl;
 
 import com.cedricakrou.my.blog.adapter.shared.secondaries.entities.SkillEntity;
 import com.cedricakrou.my.blog.adapter.shared.secondaries.repositories.jpa.PgSkillRepository;
@@ -14,14 +14,25 @@ import org.springframework.stereotype.Service;
  * @author KAKOU Akrou Cedric 2023-01-18
  */
 @Service
-class SkillRepositoryImpl implements SkillRepository {
+public class SkillRepositoryImpl implements SkillRepository {
 
   private final PgSkillRepository pgSkillRepository;
 
-  SkillRepositoryImpl(final PgSkillRepository pgSkillRepository) {
+  /**
+   * <p>Default constructor.</p>
+   *
+   * @param pgSkillRepository skill repository.
+   */
+  public SkillRepositoryImpl(final PgSkillRepository pgSkillRepository) {
     this.pgSkillRepository = pgSkillRepository;
   }
 
+  /**
+   * <p>find by name.</p>
+   *
+   * @param name name.
+   * @return skill or empty.
+   */
   @Override
   public Optional<Skill> findByName(final String name) {
 
@@ -37,6 +48,11 @@ class SkillRepositoryImpl implements SkillRepository {
     return Optional.empty();
   }
 
+  /**
+   * <p>Save skill.</p>
+   *
+   * @param skill skill.
+   */
   @Transactional
   @Override
   public void save(final Skill skill) {
@@ -44,6 +60,9 @@ class SkillRepositoryImpl implements SkillRepository {
     this.pgSkillRepository.save(skillEntity);
   }
 
+  /**
+   * <p>Delete All skills.</p>
+   */
   @Override
   public void deleteAll() {
     this.pgSkillRepository.deleteAll();
