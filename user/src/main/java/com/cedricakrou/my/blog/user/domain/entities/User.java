@@ -32,6 +32,7 @@ public class User extends DomainEntityRoot {
   private final Work[] works;
   private final String cvLink;
   private final String password;
+  private final boolean loggedIn;
 
   private User(final UserBuilder builder) {
     super(builder.getId(), builder.isEnabled(), builder.isDeleted());
@@ -52,6 +53,7 @@ public class User extends DomainEntityRoot {
     this.works = builder.works;
     this.cvLink = builder.cvLink;
     this.password = builder.password;
+    this.loggedIn = builder.loggedIn;
   }
 
   public static class UserBuilder extends AbstractEntityBuilder<User> {
@@ -72,6 +74,7 @@ public class User extends DomainEntityRoot {
     private Work[] works;
     private String cvLink;
     private String password;
+    private boolean loggedIn;
 
     /**
      * <p>Default constructor.</p>
@@ -271,6 +274,17 @@ public class User extends DomainEntityRoot {
      */
     public UserBuilder setPassword(final String password) {
       this.password = password;
+      return this;
+    }
+
+    /**
+     * <p>Update login value.</p>
+     *
+     * @param loggedIn login.
+     * @return UserBuilder.
+     */
+    public UserBuilder setLoggedIn(boolean loggedIn) {
+      this.loggedIn = loggedIn;
       return this;
     }
 

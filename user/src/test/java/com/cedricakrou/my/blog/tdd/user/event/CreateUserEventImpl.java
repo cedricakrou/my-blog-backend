@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.user.event;
+package com.cedricakrou.my.blog.tdd.user.event;
 
 import com.cedricakrou.library.generic.event.EventManager;
 import com.cedricakrou.my.blog.user.application.playload.CreateUserEventPayload;

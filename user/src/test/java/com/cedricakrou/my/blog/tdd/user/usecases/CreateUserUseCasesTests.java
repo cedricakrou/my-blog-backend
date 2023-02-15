@@ -1,16 +1,14 @@
-package com.cedricakrou.my.blog.user.usecases;
+package com.cedricakrou.my.blog.tdd.user.usecases;
 
 import com.cedricakrou.library.generic.aggregate.application.exception.AlreadyExistsException;
-import com.cedricakrou.library.generic.event.EventManager;
+import com.cedricakrou.my.blog.tdd.user.facade.UserFacadeImpl;
 import com.cedricakrou.my.blog.user.application.commands.CreateUserCommand;
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
-import com.cedricakrou.my.blog.user.application.playload.CreateUserEventPayload;
 import com.cedricakrou.my.blog.user.application.repositories.UserRepository;
 import com.cedricakrou.my.blog.user.application.usecases.CreateUserUseCase;
 import com.cedricakrou.my.blog.user.domain.entities.User;
 import com.cedricakrou.my.blog.user.domain.event.CreateUserEvent;
-import com.cedricakrou.my.blog.user.event.CreateUserEventImpl;
-import com.cedricakrou.my.blog.user.facade.UserFacadeImpl;
+import com.cedricakrou.my.blog.tdd.user.event.CreateUserEventImpl;
 import java.util.Optional;
 import java.util.UUID;
 import javax.validation.ConstraintViolationException;

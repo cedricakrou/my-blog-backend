@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.user.facade;
+package com.cedricakrou.my.blog.tdd.user.facade;
 
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
 import com.cedricakrou.my.blog.user.application.repositories.UserRepository;
