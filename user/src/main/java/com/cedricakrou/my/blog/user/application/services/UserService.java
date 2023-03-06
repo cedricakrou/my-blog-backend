@@ -28,9 +28,19 @@ public interface UserService {
   Optional<User> findUserByEmail(String email);
 
   /**
+   * <p>Find user by email.</p>
+   *
+   * @param username username.
+   * @return user or empty.
+   */
+  Optional<User> findUserByUsername(String username);
+
+  /**
    * <p>Save user.</p>
    *
    * @param user user to save.
    */
   void saveUser(User user);
+
+  String createToken(User user);
 }

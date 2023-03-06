@@ -9,7 +9,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(
+        glue = {"com.cedricakrou.my.blog.bdd.step.definitions"},
         features = {"classpath:com.cedricakrou.my.blog.bdd"}
 )
-public class LoginTest {
+public class RunCucumberTests {
 }

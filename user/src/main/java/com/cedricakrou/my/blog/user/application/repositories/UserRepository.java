@@ -19,6 +19,14 @@ public interface UserRepository {
   Optional<User> findByEmail(String email);
 
   /**
+   * <p>Find user by usermane.</p>
+   *
+   * @param username username.
+   * @return user or empty.
+   */
+  Optional<User> findByUsername(String username);
+
+  /**
    * <p>Find user by email or username .</p>
    *
    * @param email    email.

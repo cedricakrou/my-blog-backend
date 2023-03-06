@@ -139,7 +139,7 @@ class CreateUserUseCasesTests {
             .setEmail(email)
             .buildEntity();
 
-    Mockito.when(this.userRepository.findByEmailOrUsername(email, username)).thenReturn(Optional.of(user));
+    Mockito.when(this.userRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
     Exception exception = Assertions.assertThrows(
             AlreadyExistsException.class,
