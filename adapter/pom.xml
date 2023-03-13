@@ -18,6 +18,7 @@
         <test-container.version>1.17.6</test-container.version>
         <test-containters-junit-jupiter.version>1.17.6</test-containters-junit-jupiter.version>
         <spring-kafka.version>3.0.2</spring-kafka.version>
+        <jwt.version>0.9.1</jwt.version>
     </properties>
     <dependencies>
 
@@ -89,10 +90,24 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Spring Kafka -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
             <version>${spring-kafka.version}</version>
+        </dependency>
+
+        <!-- Spring security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- JWT security -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
     </dependencies>
 
