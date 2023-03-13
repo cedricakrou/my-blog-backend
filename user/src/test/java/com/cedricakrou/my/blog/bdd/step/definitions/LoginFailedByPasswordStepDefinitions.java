@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Assertions;
  *
  * @author KAKOU Akrou Cedric 2023-02-15
  */
-public class LoginStepDefinitions {
+public class LoginFailedByPasswordStepDefinitions {
 
 
   LoginCommand loginCommand;
@@ -29,7 +29,7 @@ public class LoginStepDefinitions {
   UserFacade userFacade;
   UserRepository userRepository;
 
-  public LoginStepDefinitions() {
+  public LoginFailedByPasswordStepDefinitions() {
 
     this.userRepository = new UserRepositoryStub();
 
@@ -77,13 +77,20 @@ public class LoginStepDefinitions {
     this.loginUseCase.perform(loginCommand);
   }
 
-  @Then("I {string} can't be logged.")
-  public void i_can_t_be_logged(String username) {
+  @Then("I {string} will be logged in.")
+  public void i_will_be_logged_in(String username) {
 
     Optional<User> optionalUser = this.userFacade.findUserByUsername(username);
 
     Assertions.assertTrue(optionalUser.isPresent());
     Assertions.assertTrue(optionalUser.get().isLoggedIn());
+  }
+
+  @Then("I {string} can't be logged.")
+  public void i_can_t_be_logged(String username) {
+
+
+
   }
 }
 

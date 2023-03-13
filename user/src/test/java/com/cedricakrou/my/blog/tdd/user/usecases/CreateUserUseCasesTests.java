@@ -150,6 +150,4 @@ class CreateUserUseCasesTests {
             "User already exists with this username !",
             exception.getMessage());
   }
-
-
 }

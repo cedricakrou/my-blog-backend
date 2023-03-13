@@ -5,6 +5,7 @@ import com.cedricakrou.my.blog.user.application.commands.CreateUserCommand;
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
 import com.cedricakrou.my.blog.user.application.usecases.CreateUserUseCase;
 import com.cedricakrou.my.blog.user.domain.event.CreateUserEvent;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,7 +57,7 @@ class UserRestController {
     useCase.perform(command);
 
     return ResponseEntity
-            .ok()
+            .status(HttpStatus.CREATED)
             .build();
   }
 }

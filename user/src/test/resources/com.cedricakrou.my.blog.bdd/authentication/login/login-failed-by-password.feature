@@ -1,4 +1,4 @@
-Feature: User login
+Feature: User login Succeed
 
   User login is used to connect the users to the application.
   It's successful when user account and user password are corrects.
@@ -10,17 +10,6 @@ Feature: User login
       | likpech   | akrou    | likpech@gmail.com     | likpech     | Open1234# |
       | belmondok | akrou    | belmondok@gmail.com   | belmondok   | Open1234# |
 
-
-  Scenario Outline: Login Successfully
-    When I enter "<username>" and password "<password>"
-    Then I "<username>" will be logged in.
-
-    Examples:
-      | username    | password  |
-      | cedricakrou | Open1234# |
-      | likpech     | Open1234# |
-      | belmondok   | Open1234# |
-
   Scenario Outline: Login Failed
     When I enter "<username>" and password "<password>"
     Then I "<username>" can't be logged.
@@ -30,6 +19,3 @@ Feature: User login
       | cedricakrou | Open1234  |
       | likpeche    | Open1234# |
       | belmondok   | open1234# |
-
-
-
