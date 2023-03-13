@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+
+<suppressions>
+    <suppress files="AdapterApplication.java" checks="HideUtilityClassConstructor" />
+    <suppress files="CreateCountryCommand.java" checks="MagicNumber" />
+    <suppress files="CreateUserCommand.java" checks="MagicNumber" />
+    <suppress files="CreateUserUseCase.java" checks="MagicNumber" />
+</suppressions>
