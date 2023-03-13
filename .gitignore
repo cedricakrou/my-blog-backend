@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Adapter - application.properties ###
-adapter/src/main/resources/application.properties
+/adapter/src/main/resources/application.properties
