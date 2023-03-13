@@ -23,6 +23,14 @@ public interface PgUserRepository extends JpaRepository<UserEntity, UUID> {
   Optional<UserEntity> findByEmail(String email);
 
   /**
+   * <p>Find user by username.</p>
+   *
+   * @param username username.
+   * @return user or empty.
+   */
+  Optional<UserEntity> findByUsername(String username);
+
+  /**
    * <p>Find user by email or username.</p>
    *
    * @param email    email.

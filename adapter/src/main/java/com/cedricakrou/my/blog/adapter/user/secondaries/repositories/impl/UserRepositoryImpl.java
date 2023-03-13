@@ -31,6 +31,15 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
+  public Optional<User> findByUsername(String username) {
+
+    Optional<UserEntity> optionalUserEntity =
+            this.pgUserRepository.findByUsername(username);
+
+    return userEntityToUserDomain(optionalUserEntity);
+  }
+
+  @Override
   public Optional<User> findByEmailOrUsername(final String email,
                                               final String username) {
 

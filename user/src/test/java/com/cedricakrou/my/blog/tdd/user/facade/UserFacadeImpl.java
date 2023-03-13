@@ -1,4 +1,4 @@
-package com.cedricakrou.my.blog.user.facade;
+package com.cedricakrou.my.blog.tdd.user.facade;
 
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
 import com.cedricakrou.my.blog.user.application.repositories.UserRepository;
@@ -32,7 +32,18 @@ public class UserFacadeImpl implements UserFacade {
   }
 
   @Override
+  public Optional<User> findUserByUsername(String username) {
+    return this.userRepository.findByUsername(username);
+  }
+
+  @Override
   public void saveUser(User user) {
     this.userRepository.save(user);
+  }
+
+  @Override
+  public String createToken(User user) {
+
+    return "token";
   }
 }

@@ -32,6 +32,7 @@ public class User extends DomainEntityRoot {
   private final Work[] works;
   private final String cvLink;
   private final String password;
+  private final boolean loggedIn;
 
   private User(final UserBuilder builder) {
     super(builder.getId(), builder.isEnabled(), builder.isDeleted());
@@ -52,6 +53,7 @@ public class User extends DomainEntityRoot {
     this.works = builder.works;
     this.cvLink = builder.cvLink;
     this.password = builder.password;
+    this.loggedIn = builder.loggedIn;
   }
 
   public static class UserBuilder extends AbstractEntityBuilder<User> {
@@ -72,9 +74,10 @@ public class User extends DomainEntityRoot {
     private Work[] works;
     private String cvLink;
     private String password;
+    private boolean loggedIn;
 
     /**
-     * <p>Default constructor.</p>
+     * <p>Constructor uses to create object.</p>
      *
      * @param id      Identifier.
      * @param enabled enabled.
@@ -85,6 +88,33 @@ public class User extends DomainEntityRoot {
             final boolean enabled,
             final boolean deleted) {
       super(id, enabled, deleted);
+    }
+
+    /**
+     * <p>Constructor uses to modify object.</p>
+     */
+    public UserBuilder(
+            User user
+    ) {
+      super(user.getId(), user.isEnabled(), user.isDeleted());
+      setFirstname(user.getFirstname());
+      setLastname(user.getLastname());
+      setEmail(user.getEmail());
+      setUsername(user.getUsername());
+      setPhones(user.getPhones());
+      setAddress(user.getAddress());
+      setRole(user.getRole());
+      setMenus(user.getMenus());
+      setExperiences(user.getExperiences());
+      setSocialMedias(user.getSocialMedias());
+      setServices(user.getServices());
+      setBriefDescription(user.getBriefDescription());
+      setWorkDescription(user.getWorkDescription());
+      setCurrentJob(user.getCurrentJob());
+      setWorks(user.getWorks());
+      setCvLink(user.getCvLink());
+      setPassword(user.getPassword());
+      setLoggedIn(user.isLoggedIn());
     }
 
     /**
@@ -271,6 +301,17 @@ public class User extends DomainEntityRoot {
      */
     public UserBuilder setPassword(final String password) {
       this.password = password;
+      return this;
+    }
+
+    /**
+     * <p>Update login value.</p>
+     *
+     * @param loggedIn login.
+     * @return UserBuilder.
+     */
+    public UserBuilder setLoggedIn(boolean loggedIn) {
+      this.loggedIn = loggedIn;
       return this;
     }
 
