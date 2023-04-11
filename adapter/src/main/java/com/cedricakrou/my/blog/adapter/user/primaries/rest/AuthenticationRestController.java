@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author KAKOU Akrou Cedric 2023-03-13
  */
 @RestController
-@RequestMapping("/authentication")
+@RequestMapping("/auth")
 public class AuthenticationRestController {
 
   private final UserFacade userFacade;

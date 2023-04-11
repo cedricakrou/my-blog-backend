@@ -20,13 +20,24 @@ public class LoginUseCase implements UseCaseQuery<LoginCommand, String> {
   private final Logger logger = Logger.getLogger(LoginUseCase.class.getName());
   private final UserFacade userFacade;
 
-  public LoginUseCase(UserFacade userFacade) {
+  /**
+   * <p>Constructor.</p>
+   *
+   * @param userFacade user facade.
+   */
+  public LoginUseCase(final UserFacade userFacade) {
     this.userFacade = userFacade;
   }
 
+  /**
+   * <p>perform method.</p>
+   *
+   * @param command command of the use case.
+   * @return token.
+   */
   @SneakyThrows
   @Override
-  public String perform(LoginCommand command) {
+  public String perform(final LoginCommand command) {
 
     String username = command.getUsername();
     String password = command.getPassword();

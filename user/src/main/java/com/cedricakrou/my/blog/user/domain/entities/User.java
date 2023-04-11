@@ -92,9 +92,11 @@ public class User extends DomainEntityRoot {
 
     /**
      * <p>Constructor uses to modify object.</p>
+     *
+     * @param user user.
      */
     public UserBuilder(
-            User user
+            final User user
     ) {
       super(user.getId(), user.isEnabled(), user.isDeleted());
       setFirstname(user.getFirstname());
@@ -310,7 +312,7 @@ public class User extends DomainEntityRoot {
      * @param loggedIn login.
      * @return UserBuilder.
      */
-    public UserBuilder setLoggedIn(boolean loggedIn) {
+    public UserBuilder setLoggedIn(final boolean loggedIn) {
       this.loggedIn = loggedIn;
       return this;
     }
