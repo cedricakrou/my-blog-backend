@@ -1,9 +1,11 @@
 package com.cedricakrou.my.blog.adapter.user.secondaries.facade;
 
+import com.cedricakrou.library.security.jwt.JwtAuthenticationImpl;
 import com.cedricakrou.my.blog.user.application.facade.UserFacade;
 import com.cedricakrou.my.blog.user.application.repositories.UserRepository;
 import com.cedricakrou.my.blog.user.domain.entities.User;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,10 +14,17 @@ import org.springframework.stereotype.Service;
  * @author KAKOU Akrou Cedric 2023-01-24
  */
 @Service
-class UserFacadeImpl implements UserFacade {
+class UserFacadeImpl extends JwtAuthenticationImpl implements UserFacade {
 
 
   private final UserRepository userRepository;
+
+  @Value("${cedricakrou.my-blog.jwt.secret-key}")
+  private String jwtSecretKey;
+
+  @Value("${cedricakrou.my-blog.jwt.expiration-duration}")
+  private long jwtDuration;
+
 
   /**
    * <p>Default constructor.</p>
@@ -42,7 +51,22 @@ class UserFacadeImpl implements UserFacade {
   }
 
   @Override
+  public Optional<User> findUserByUsername(final String username) {
+    return this.userRepository.findByUsername(username);
+  }
+
+  @Override
   public void saveUser(final User user) {
     this.userRepository.save(user);
+  }
+
+  @Override
+  public String createToken(final User user) {
+
+    return generateToken(
+            user.getEmail(),
+            jwtSecretKey,
+            jwtDuration
+    );
   }
 }

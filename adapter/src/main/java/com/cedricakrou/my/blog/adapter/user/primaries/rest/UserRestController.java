@@ -40,7 +40,7 @@ class UserRestController {
    * @param form form.
    * @return response.
    */
-  @PostMapping("")
+  @PostMapping("/create-account")
   public ResponseEntity<Void> createUser(
           final @RequestBody CreateUserForm form) {
 

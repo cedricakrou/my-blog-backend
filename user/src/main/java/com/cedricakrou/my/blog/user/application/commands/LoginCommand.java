@@ -20,7 +20,8 @@ public class LoginCommand implements Command {
    * @param username username.
    * @param password password.
    */
-  public LoginCommand(String username, String password) {
+  public LoginCommand(final String username,
+                      final String password) {
     this.username = username;
     this.password = password;
   }
