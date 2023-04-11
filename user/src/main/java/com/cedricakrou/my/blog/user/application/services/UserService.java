@@ -42,5 +42,11 @@ public interface UserService {
    */
   void saveUser(User user);
 
+  /**
+   * <p>Create token.</p>
+   *
+   * @param user user.
+   * @return token.
+   */
   String createToken(User user);
 }
